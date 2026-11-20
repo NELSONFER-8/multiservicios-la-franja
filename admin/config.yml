@@ -11,7 +11,9 @@ public_folder: "/img/uploads"
 
 collections:
   - name: "negocio"
-    label: "Negocio y contacto"
+    label: "Datos del negocio"
+    label_singular: "dato"
+    description: "Logo, colores, horario, mapa y textos principales del sitio."
     icon: "store"
     files:
       - name: "site"
@@ -80,8 +82,138 @@ collections:
               - { label: "Color de texto secundario", name: "textoSuave", widget: "color", allowInput: true }
               - { label: "Color de WhatsApp", name: "wa", widget: "color", allowInput: true }
 
+  - name: "paginas"
+    label: "Textos de las páginas"
+    label_singular: "texto"
+    description: "Edita los títulos y párrafos de Inicio, Productos, Servicios, Nosotros y Contacto."
+    icon: "article"
+    files:
+      - name: "paginas"
+        label: "Editar textos de las páginas"
+        file: "data/paginas.json"
+        format: "json"
+        fields:
+          - label: "Inicio"
+            name: "inicio"
+            widget: "object"
+            fields:
+              - { label: "Texto pequeño sobre el título", name: "eyebrow", widget: "string" }
+              - { label: "Título: primera parte", name: "categoriasTitulo1", widget: "string" }
+              - { label: "Título: palabra destacada", name: "categoriasTitulo2", widget: "string" }
+              - { label: "Bajada de categorías", name: "categoriasIntro", widget: "string" }
+              - { label: "Título 'Por qué': primera parte", name: "porQueTitulo1", widget: "string" }
+              - { label: "Título 'Por qué': palabra destacada", name: "porQueTitulo2", widget: "string" }
+              - label: "Tarjetas de 'Por qué elegirnos'"
+                name: "ventajas"
+                widget: "list"
+                summary: "{{fields.icono}} {{fields.titulo}}"
+                fields:
+                  - { label: "Icono (emoji)", name: "icono", widget: "string" }
+                  - { label: "Título", name: "titulo", widget: "string" }
+                  - { label: "Texto", name: "texto", widget: "text" }
+              - { label: "Texto del botón 'Ver productos'", name: "botonProductos", widget: "string" }
+              - { label: "Texto del botón 'Contáctanos'", name: "botonContacto", widget: "string" }
+              - { label: "Texto debajo de cada categoría", name: "verCategoria", widget: "string" }
+          - label: "Productos"
+            name: "productos"
+            widget: "object"
+            fields:
+              - { label: "Título: primera parte", name: "titulo1", widget: "string" }
+              - { label: "Título: palabra destacada", name: "titulo2", widget: "string" }
+              - { label: "Texto de presentación", name: "intro", widget: "text", hint: "Ej. Precios en Quetzales. Para confirmar existencias o pedir cotización, escríbenos por WhatsApp." }
+              - { label: "Texto del buscador", name: "buscador", widget: "string" }
+              - { label: "Mensaje cuando no hay resultados", name: "vacio", widget: "string" }
+          - label: "Servicios"
+            name: "servicios"
+            widget: "object"
+            fields:
+              - { label: "Título: primera parte", name: "titulo1", widget: "string" }
+              - { label: "Título: palabra destacada", name: "titulo2", widget: "string" }
+              - { label: "Texto de presentación", name: "intro", widget: "string" }
+              - { label: "Mensaje cuando no hay servicios", name: "vacio", widget: "string" }
+          - label: "Nosotros"
+            name: "nosotros"
+            widget: "object"
+            fields:
+              - { label: "Título: primera parte", name: "titulo1", widget: "string" }
+              - { label: "Título: palabra destacada", name: "titulo2", widget: "string" }
+              - { label: "Texto de presentación", name: "intro", widget: "string" }
+              - { label: "Título de la tarjeta de compromiso", name: "compromisoTitulo", widget: "string" }
+              - label: "Tarjetas de valores"
+                name: "valores"
+                widget: "list"
+                summary: "{{fields.icono}} {{fields.titulo}}"
+                fields:
+                  - { label: "Icono (emoji)", name: "icono", widget: "string" }
+                  - { label: "Título", name: "titulo", widget: "string" }
+                  - { label: "Texto", name: "texto", widget: "text" }
+          - label: "Contacto"
+            name: "contacto"
+            widget: "object"
+            fields:
+              - { label: "Título destacado", name: "titulo2", widget: "string" }
+              - { label: "Texto de presentación", name: "intro", widget: "string" }
+              - { label: "Título de datos de contacto", name: "datosTitulo", widget: "string" }
+              - { label: "Título del formulario", name: "formTitulo", widget: "string" }
+              - { label: "Etiqueta del nombre", name: "nombreLabel", widget: "string" }
+              - { label: "Etiqueta del mensaje", name: "mensajeLabel", widget: "string" }
+              - { label: "Texto del botón", name: "boton", widget: "string" }
+          - label: "Menú y pie de página"
+            name: "comun"
+            widget: "object"
+            fields:
+              - label: "Nombres del menú"
+                name: "nav"
+                widget: "object"
+                fields:
+                  - { label: "Inicio", name: "inicio", widget: "string" }
+                  - { label: "Productos", name: "productos", widget: "string" }
+                  - { label: "Servicios", name: "servicios", widget: "string" }
+                  - { label: "Nosotros", name: "nosotros", widget: "string" }
+                  - { label: "Contacto", name: "contacto", widget: "string" }
+              - { label: "Título 'Ubicación' en el pie", name: "footerUbicacion", widget: "string" }
+              - { label: "Título 'Teléfonos' en el pie", name: "footerTelefonos", widget: "string" }
+              - { label: "Texto del enlace del mapa", name: "verMapa", widget: "string" }
+
+  - name: "categorias"
+    label: "1. Categorías"
+    label_singular: "categoría"
+    description: "Crea aquí las categorías. Después aparecerán en la lista del formulario de productos."
+    icon: "category"
+    folder: "data/categorias"
+    extension: "json"
+    format: "json"
+    create: true
+    delete: true
+    identifier_field: "nombre"
+    fields:
+      - { label: "Nombre de la categoría", name: "nombre", widget: "string", hint: "Ej. FERRETERÍA GENERAL. Escribe siempre el mismo nombre para agrupar productos." }
+
+  - name: "subcategorias"
+    label: "2. Subcategorías"
+    label_singular: "subcategoría"
+    description: "Crea aquí las subcategorías e indica a qué categoría pertenecen."
+    icon: "label"
+    folder: "data/subcategorias"
+    extension: "json"
+    format: "json"
+    create: true
+    delete: true
+    identifier_field: "nombre"
+    fields:
+      - { label: "Nombre de la subcategoría", name: "nombre", widget: "string", hint: "Ej. Herramientas manuales o DESMALEZADORAS." }
+      - label: "Categoría a la que pertenece"
+        name: "categoria"
+        widget: "relation"
+        collection: "categorias"
+        search_fields: ["nombre"]
+        value_field: "nombre"
+        display_fields: ["nombre"]
+
   - name: "catalogo"
-    label: "Catálogo de productos"
+    label: "3. Productos"
+    label_singular: "producto"
+    description: "Agrega productos eligiendo categoría y subcategoría desde las listas."
     icon: "inventory_2"
     files:
       - name: "catalogo"
@@ -93,21 +225,34 @@ collections:
             name: "productos"
             widget: "list"
             summary: "{{fields.nombre}} — {{fields.categoria}}"
-            hint: "Recarga esta página antes de agregar o borrar productos: así evitas sobrescribir cambios recientes. Cada producto lleva su categoría y subcategoría; la web los agrupa sola."
+            hint: "Recarga esta página antes de agregar o borrar productos. Categoría y subcategoría se eligen de una lista: créalas primero en los menús 1 y 2 si no aparecen."
             fields:
               - { label: "Nombre del producto", name: "nombre", widget: "string" }
               - label: "Categoría"
                 name: "categoria"
-                widget: "string"
-                hint: "Ej. FERRETERÍA GENERAL. Escribe igual el nombre para agrupar productos. Puedes crear categorías nuevas."
-              - { label: "Subcategoría", name: "subcategoria", widget: "string", hint: "Ej. Herramientas manuales." }
+                widget: "relation"
+                collection: "categorias"
+                search_fields: ["nombre"]
+                value_field: "nombre"
+                display_fields: ["nombre"]
+                hint: "Elige de la lista. Para crear una nueva, ve al menú '1. Categorías'."
+              - label: "Subcategoría"
+                name: "subcategoria"
+                widget: "relation"
+                collection: "subcategorias"
+                search_fields: ["nombre", "categoria"]
+                value_field: "nombre"
+                display_fields: ["nombre", "categoria"]
+                hint: "Elige de la lista. Para crear una nueva, ve al menú '2. Subcategorías'."
               - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
               - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
               - { label: "Unidad (metro, unidad, m²...)", name: "unidad", widget: "string" }
               - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
 
   - name: "servicios"
-    label: "Servicios"
+    label: "4. Servicios"
+    label_singular: "servicio"
+    description: "Los servicios que se muestran en la página Servicios."
     icon: "design_services"
     files:
       - name: "servicios"

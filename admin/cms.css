@@ -1,0 +1,22 @@
+/* Panel de administración - tema MULTISERVICIOS LA FRANJA */
+:root{
+  --primary-color:#0f766e !important;
+  --accent-color:#f59e0b !important;
+  --button-color:#0f1d38 !important;
+  --button-text-color:#ffffff !important;
+  --text-color:#1e293b !important;
+  --secondary-text-color:#64748b !important;
+  --background-color:#f4f7fb !important;
+  --sidebar-color:#0a1020 !important;
+  --sidebar-text-color:#e8eef9 !important;
+  --card-color:#ffffff !important;
+  --border-color:#e2e8f0 !important;
+  --error-color:#dc2626 !important;
+}
+html,body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif !important;
+  background:#f4f7fb !important;
+}
+button,[role="button"]{border-radius:10px !important}
+a{transition:color .15s ease,background-color .15s ease}
+input,textarea,select{font-family:inherit !important}
