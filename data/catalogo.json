@@ -134,6 +134,14 @@
       "precio": 18,
       "unidad": "metro",
       "imagen": ""
+    },
+    {
+      "nombre": "PRODUCTO PRUEBA CLOUDFLARE",
+      "categoria": "CATEGORIA PRUEBA CLOUDFLARE",
+      "subcategoria": "Novedades",
+      "descripcion": "Prueba temporal",
+      "precio": 99,
+      "unidad": "unidad"
     }
   ]
 }
