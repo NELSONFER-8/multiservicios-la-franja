@@ -1,31 +1,25 @@
 {
+  "logo": "",
+  "nombre": "MULTISERVICIOS LA FRANJA",
+  "nombreCorto": "LA FRANJA",
+  "subtitulo": "MULTISERVICIOS",
+  "descripcion": "Ferretería, vidriería, herrería, láminas, perfiles y molduras en Raxruhá, Alta Verapaz.",
+  "whatsapp": "50240507209",
+  "contacto": {
+    "direccion": "Aldea San Antonio Las Cuevas, Raxruhá, Alta Verapaz, Guatemala",
+    "mapaUrl": "https://www.google.com/maps/search/?api=1&query=Aldea+San+Antonio+Las+Cuevas+Raxruh%C3%A1+Alta+Verapaz",
+    "telefonos": ["4050-7209", "4011-3693", "3722-2616"],
+    "email": "",
+    "horario": ""
+  },
   "inicio": {
     "heroTitulo": "Todo para tu obra en un solo lugar:",
     "heroDestacado": "MULTISERVICIOS LA FRANJA",
-    "heroLead": "Ferretería, vidriería, herrería, láminas, perfiles y molduras.",
+    "heroLead": "Ferretería, vidriería, herrería, láminas, perfiles y molduras. Calidad y atención cercana para Raxruhá y municipios vecinos.",
     "ctaTitulo": "¿Necesitas una cotización?",
     "ctaTexto": "Escríbenos por WhatsApp y te respondemos lo antes posible.",
     "ctaBoton": "Escribir por WhatsApp"
   },
-  "nombre": "MULTISERVICIOS LA FRANJA",
-  "pie": {
-    "descripcion": "Ferretería, vidriería, herrería, láminas, perfiles y molduras."
-  },
-  "descripcion": "Ferretería, vidriería, herrería, láminas, perfiles y molduras.",
-  "contacto": {
-    "direccion": "Aldea San Antonio Las Cuevas, Raxruhá, Alta Verapaz, Guatemala",
-    "mapaUrl": "https://www.google.com/maps/place/Multiservicios+La+Franja/@15.8748726,-90.0788095,717m/data=!3m1!1e3!4m6!3m5!1s0x858a8727b9ca5221:0xe32c85b4f3716283!8m2!3d15.8742278!4d-90.0754608!16s%2Fg%2F11t57x2vfl?entry=ttu&g_ep=EgoyMDI2MTExNy4wIKXMDSoASAFQAw%3D%3D",
-    "telefonos": [
-      "4050-7209",
-      "4011-3693",
-      "3722-2616"
-    ],
-    "email": "",
-    "horario": "Lunes a Sabado de 7:00 am A 5:00 pm"
-  },
-  "whatsapp": "50240507209",
-  "nombreCorto": "LA FRANJA",
-  "subtitulo": "MULTISERVICIOS",
   "servicios": {
     "ctaTitulo": "¿Tienes un proyecto en mente?",
     "ctaTexto": "Cuéntanos qué necesitas y te ayudamos.",
@@ -34,5 +28,20 @@
   "nosotros": {
     "texto": "Somos una ferretería, vidriería y herrería ubicada en Aldea San Antonio Las Cuevas, Raxruhá, Alta Verapaz. Atendemos a clientes locales y de municipios vecinos con materiales, láminas, perfiles, molduras y trabajos a la medida.",
     "compromiso": "Ofrecer buenos materiales, precios justos y atención cercana, para que tu proyecto salga bien desde el primer día."
+  },
+  "pie": {
+    "descripcion": "Ferretería, vidriería, herrería, láminas, perfiles y molduras."
+  },
+  "colores": {
+    "fondo1": "#0a1020",
+    "fondo2": "#0f1d38",
+    "fondo3": "#12284a",
+    "acento": "#fbbf24",
+    "acento2": "#f59e0b",
+    "secundario": "#22d3ee",
+    "secundario2": "#06b6d4",
+    "texto": "#e8eef9",
+    "textoSuave": "#9fb0cc",
+    "wa": "#25d366"
   }
 }

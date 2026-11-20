@@ -51,9 +51,36 @@
     }).join("");
   }
 
+  function logoHTML() {
+    var src = L.asset(get("logo", ""));
+    return src
+      ? '<img class="brand-logo-img" src="' + esc(src) + '" alt="' + esc(get("nombre", "")) + '">'
+      : '<div class="brand-logo">🛠️</div>';
+  }
+
+  /* Mapa de colores editables -> variables CSS. */
+  var COLORES = {
+    "colores.fondo1": "--bg-1",
+    "colores.fondo2": "--bg-2",
+    "colores.fondo3": "--bg-3",
+    "colores.acento": "--amber",
+    "colores.acento2": "--amber-2",
+    "colores.secundario": "--cyan",
+    "colores.secundario2": "--cyan-2",
+    "colores.texto": "--text",
+    "colores.textoSuave": "--muted",
+    "colores.wa": "--wa"
+  };
+
+  function aplicarColores() {
+    Object.keys(COLORES).forEach(function (k) {
+      document.documentElement.style.setProperty(COLORES[k], L.color(k));
+    });
+  }
+
   function headerHTML() {
     return '<header class="site-header"><div class="container"><nav class="nav glass" aria-label="Navegación principal">' +
-      '<a class="brand" href="index.html"><div class="brand-logo">🛠️</div>' +
+      '<a class="brand" href="index.html">' + logoHTML() +
       "<span>" + esc(get("nombreCorto", "LA FRANJA")) + "<small>" + esc(get("subtitulo", "MULTISERVICIOS")) + "</small></span></a>" +
       '<button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">☰</button>' +
       '<ul class="nav-links" id="navLinks">' + links() + "</ul></nav></div></header>";
@@ -61,8 +88,10 @@
 
   function footerHTML() {
     var nombre = esc(get("nombre", "MULTISERVICIOS LA FRANJA"));
+    var src = L.asset(get("logo", ""));
+    var logo = src ? '<img class="footer-logo" src="' + esc(src) + '" alt="' + nombre + '">' : "";
     return '<footer class="site-footer"><div class="container"><div class="footer-grid">' +
-      "<div><h4>" + nombre + "</h4><p>" + esc(get("pie.descripcion", "")) + "</p></div>" +
+      "<div>" + logo + "<h4>" + nombre + "</h4><p>" + esc(get("pie.descripcion", "")) + "</p></div>" +
       "<div><h4>Ubicación</h4><p>" + esc(get("contacto.direccion", "")) + "</p></div>" +
       "<div><h4>Teléfonos</h4>" + (telefonosHTML() || '<a href="' + esc(L.waLink()) + '">WhatsApp</a>') + "</div>" +
       "</div><p class=\"copy\">© " + new Date().getFullYear() + " " + nombre + ". Todos los derechos reservados.</p></div></footer>";
@@ -93,6 +122,10 @@
       var key = node.getAttribute("data-lafanja");
       var val = get(key, "");
       switch (key) {
+        case "logo":
+          var src = L.asset(val);
+          node.innerHTML = src ? '<img src="' + esc(src) + '" alt="' + esc(get("nombre", "")) + '">' : "";
+          break;
         case "contacto.direccion":
           node.innerHTML = esc(val) + '<br><a target="_blank" rel="noopener" href="' + esc(get("contacto.mapaUrl", "#")) + '">Ver en Google Maps</a>';
           break;
@@ -120,6 +153,7 @@
   }
 
   function render() {
+    aplicarColores();
     inject(".skip-link", '<a class="skip-link" href="#contenido">Saltar al contenido</a>', "afterbegin");
     inject(".site-header", headerHTML(), "afterbegin");
     inject(".site-footer", footerHTML(), "beforeend");

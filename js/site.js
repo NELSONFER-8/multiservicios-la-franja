@@ -2,6 +2,7 @@
    Expone window.LAFRANJA con los datos y utilidades usadas por main.js y data-loader.js. */
 (function () {
   var DEFAULTS = {
+    logo: "",
     nombre: "MULTISERVICIOS LA FRANJA",
     nombreCorto: "LA FRANJA",
     subtitulo: "MULTISERVICIOS",
@@ -33,6 +34,18 @@
     },
     pie: {
       descripcion: "Ferretería, vidriería, herrería, láminas, perfiles y molduras."
+    },
+    colores: {
+      fondo1: "#0a1020",
+      fondo2: "#0f1d38",
+      fondo3: "#12284a",
+      acento: "#fbbf24",
+      acento2: "#f59e0b",
+      secundario: "#22d3ee",
+      secundario2: "#06b6d4",
+      texto: "#e8eef9",
+      textoSuave: "#9fb0cc",
+      wa: "#25d366"
     }
   };
 
@@ -45,7 +58,29 @@
     });
   }
 
+  function resolve(obj, path) {
+    var parts = String(path).split(".");
+    var v = obj;
+    for (var i = 0; i < parts.length; i++) {
+      if (v == null) return "";
+      v = v[parts[i]];
+    }
+    return v == null ? "" : v;
+  }
+
   function digits(v) { return String(v == null ? "" : v).replace(/[^0-9]/g, ""); }
+
+  /* El CMS guarda rutas como /img/uploads/logo.png; se normalizan para subcarpetas. */
+  function asset(path) {
+    return String(path == null ? "" : path).trim().replace(/^\/+/, "");
+  }
+
+  /* Solo se aceptan hexadecimales válidos: evita inyectar CSS desde el CMS. */
+  function color(path) {
+    var v = String(resolve(settings, path)).trim();
+    if (/^#([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(v)) return v;
+    return String(resolve(DEFAULTS, path) || "#000000");
+  }
 
   function deepMerge(target, source) {
     Object.keys(source || {}).forEach(function (k) {
@@ -86,8 +121,12 @@
 
   window.LAFRANJA = {
     settings: settings,
+    defaults: DEFAULTS,
     ready: ready,
     esc: esc,
+    resolve: resolve,
+    asset: asset,
+    color: color,
     waNumero: waNumero,
     waTexto: waTexto,
     waLink: function (texto) {

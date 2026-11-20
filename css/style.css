@@ -2,6 +2,7 @@
 :root{
   --bg-1:#0a1020; --bg-2:#0f1d38; --bg-3:#12284a;
   --amber:#fbbf24; --amber-2:#f59e0b; --cyan:#22d3ee; --cyan-2:#06b6d4;
+  --wa:#25d366;
   --text:#e8eef9; --muted:#9fb0cc;
   --glass:rgba(255,255,255,.07); --glass-strong:rgba(255,255,255,.12);
   --border:rgba(255,255,255,.14);
@@ -52,7 +53,7 @@ section{padding:56px 0}
 .btn-primary:hover{transform:translateY(-2px)}
 .btn-ghost{background:var(--glass);border-color:var(--border);color:var(--text)}
 .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
-.btn-wa{background:#25d366;color:#052e16}
+.btn-wa{background:var(--wa);color:#052e16}
 .btn-sm{padding:8px 14px;font-size:.88rem;border-radius:10px}
 
 .hero{padding:70px 0 40px}
@@ -128,7 +129,7 @@ label{font-weight:600;font-size:.9rem;display:block;margin-bottom:4px}
 .copy{text-align:center;margin-top:22px;color:var(--muted);font-size:.82rem}
 
 .wa-float{position:fixed;right:18px;bottom:18px;z-index:100;width:60px;height:60px;border-radius:50%;
-  background:#25d366;display:grid;place-items:center;box-shadow:0 8px 28px rgba(37,211,102,.5);animation:pulse 2.2s infinite}
+  background:var(--wa);display:grid;place-items:center;box-shadow:0 8px 28px rgba(37,211,102,.5);animation:pulse 2.2s infinite}
 .wa-float svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .wa-float:hover{transform:scale(1.08)}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
@@ -150,3 +151,10 @@ label{font-weight:600;font-size:.9rem;display:block;margin-bottom:4px}
 [hidden]{display:none!important}
 .form-estado{color:var(--cyan);font-size:.9rem;min-height:1.3em}
 .btn:focus-visible,.chip:focus-visible,.menu-btn:focus-visible,.nav-links a:focus-visible,.skip-link:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+/* Logotipo configurable desde el panel */
+.brand-logo-img{width:38px;height:38px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,.1);padding:3px}
+.hero-logo{margin-bottom:16px}
+.hero-logo:empty{display:none}
+.hero-logo img{max-width:220px;max-height:90px;object-fit:contain;margin:0 auto}
+.footer-logo{display:block;max-width:130px;max-height:52px;object-fit:contain;margin-bottom:12px}

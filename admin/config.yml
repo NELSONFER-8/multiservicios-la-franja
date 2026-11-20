@@ -7,11 +7,82 @@ media_folder: "img/uploads"
 public_folder: "/img/uploads"
 
 collections:
-  - name: "datos"
-    label: "Contenido del sitio"
+  - name: "negocio"
+    label: "Negocio y contacto"
+    icon: "store"
+    files:
+      - name: "site"
+        label: "Datos, logo y colores"
+        file: "data/site.json"
+        format: "json"
+        fields:
+          - { label: "Logotipo", name: "logo", widget: "image", required: false, hint: "Se muestra en la cabecera, el inicio y el pie de página." }
+          - { label: "Nombre del negocio", name: "nombre", widget: "string" }
+          - { label: "Nombre corto (cabecera)", name: "nombreCorto", widget: "string" }
+          - { label: "Subtítulo del logo", name: "subtitulo", widget: "string" }
+          - { label: "WhatsApp", name: "whatsapp", widget: "string", hint: "Ej. 4050-7209 o +502 4050 7209. Se usa en todos los botones." }
+          - label: "Dirección y contacto"
+            name: "contacto"
+            widget: "object"
+            fields:
+              - { label: "Dirección", name: "direccion", widget: "string" }
+              - { label: "URL de Google Maps", name: "mapaUrl", widget: "string", hint: "En Google Maps: Compartir → Copiar enlace." }
+              - label: "Teléfonos"
+                name: "telefonos"
+                widget: "list"
+                field: { label: "Teléfono", name: "numero", widget: "string" }
+              - { label: "Correo electrónico (opcional)", name: "email", widget: "string", required: false }
+              - { label: "Horario (opcional)", name: "horario", widget: "string", required: false }
+          - label: "Textos del Inicio"
+            name: "inicio"
+            widget: "object"
+            fields:
+              - { label: "Título principal", name: "heroTitulo", widget: "string" }
+              - { label: "Texto destacado", name: "heroDestacado", widget: "string" }
+              - { label: "Párrafo principal", name: "heroLead", widget: "text" }
+              - { label: "Título de cotización", name: "ctaTitulo", widget: "string" }
+              - { label: "Texto de cotización", name: "ctaTexto", widget: "text" }
+              - { label: "Texto del botón", name: "ctaBoton", widget: "string" }
+          - label: "Textos de Servicios"
+            name: "servicios"
+            widget: "object"
+            fields:
+              - { label: "Título de cotización", name: "ctaTitulo", widget: "string" }
+              - { label: "Texto de cotización", name: "ctaTexto", widget: "text" }
+              - { label: "Texto del botón", name: "ctaBoton", widget: "string" }
+          - label: "Textos de Nosotros"
+            name: "nosotros"
+            widget: "object"
+            fields:
+              - { label: "Quiénes somos", name: "texto", widget: "text" }
+              - { label: "Nuestro compromiso", name: "compromiso", widget: "text" }
+          - label: "Pie de página"
+            name: "pie"
+            widget: "object"
+            fields:
+              - { label: "Descripción", name: "descripcion", widget: "string" }
+          - label: "Colores del sitio"
+            name: "colores"
+            widget: "object"
+            hint: "Elige los colores con el selector o escribe el código hexadecimal."
+            fields:
+              - { label: "Fondo principal", name: "fondo1", widget: "color", allowInput: true }
+              - { label: "Fondo medio", name: "fondo2", widget: "color", allowInput: true }
+              - { label: "Fondo claro", name: "fondo3", widget: "color", allowInput: true }
+              - { label: "Color principal", name: "acento", widget: "color", allowInput: true }
+              - { label: "Color principal (tono 2)", name: "acento2", widget: "color", allowInput: true }
+              - { label: "Color secundario", name: "secundario", widget: "color", allowInput: true }
+              - { label: "Color secundario (tono 2)", name: "secundario2", widget: "color", allowInput: true }
+              - { label: "Color del texto", name: "texto", widget: "color", allowInput: true }
+              - { label: "Color de texto secundario", name: "textoSuave", widget: "color", allowInput: true }
+              - { label: "Color de WhatsApp", name: "wa", widget: "color", allowInput: true }
+
+  - name: "catalogo"
+    label: "Catálogo de productos"
+    icon: "inventory_2"
     files:
       - name: "catalogo"
-        label: "Catálogo de productos"
+        label: "Editar catálogo"
         file: "data/catalogo.json"
         format: "json"
         fields:
@@ -40,61 +111,13 @@ collections:
                       - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
                       - { label: "Unidad (metro, unidad, m²...)", name: "unidad", widget: "string" }
                       - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
-      - name: "site"
-        label: "Datos del negocio (personalización)"
-        file: "data/site.json"
-        format: "json"
-        fields:
-          - { label: "Nombre completo", name: "nombre", widget: "string" }
-          - { label: "Nombre corto (logo)", name: "nombreCorto", widget: "string" }
-          - { label: "Subtítulo del logo", name: "subtitulo", widget: "string" }
-          - { label: "Descripción para buscadores", name: "descripcion", widget: "text" }
-          - label: "WhatsApp (número, con o sin código de país)"
-            name: "whatsapp"
-            widget: "string"
-            hint: "Ej. 4050-7209 o +502 4050 7209. Se usa en todos los botones del sitio."
-          - label: "Datos de contacto"
-            name: "contacto"
-            widget: "object"
-            fields:
-              - { label: "Dirección", name: "direccion", widget: "string" }
-              - { label: "URL de Google Maps", name: "mapaUrl", widget: "string" }
-              - label: "Teléfonos"
-                name: "telefonos"
-                widget: "list"
-                field: { label: "Teléfono", name: "numero", widget: "string" }
-              - { label: "Correo electrónico (opcional)", name: "email", widget: "string", required: false }
-              - { label: "Horario (opcional)", name: "horario", widget: "string", required: false }
-          - label: "Textos de Inicio"
-            name: "inicio"
-            widget: "object"
-            fields:
-              - { label: "Título principal", name: "heroTitulo", widget: "string" }
-              - { label: "Texto destacado", name: "heroDestacado", widget: "string" }
-              - { label: "Párrafo principal", name: "heroLead", widget: "text" }
-              - { label: "Título de cotización", name: "ctaTitulo", widget: "string" }
-              - { label: "Texto de cotización", name: "ctaTexto", widget: "text" }
-              - { label: "Texto del botón", name: "ctaBoton", widget: "string" }
-          - label: "Textos de Servicios"
-            name: "servicios"
-            widget: "object"
-            fields:
-              - { label: "Título de cotización", name: "ctaTitulo", widget: "string" }
-              - { label: "Texto de cotización", name: "ctaTexto", widget: "text" }
-              - { label: "Texto del botón", name: "ctaBoton", widget: "string" }
-          - label: "Textos de Nosotros"
-            name: "nosotros"
-            widget: "object"
-            fields:
-              - { label: "Quiénes somos", name: "texto", widget: "text" }
-              - { label: "Nuestro compromiso", name: "compromiso", widget: "text" }
-          - label: "Pie de página"
-            name: "pie"
-            widget: "object"
-            fields:
-              - { label: "Descripción", name: "descripcion", widget: "string" }
+
+  - name: "servicios"
+    label: "Servicios"
+    icon: "design_services"
+    files:
       - name: "servicios"
-        label: "Servicios"
+        label: "Editar servicios"
         file: "data/servicios.json"
         format: "json"
         fields:
