@@ -93,7 +93,7 @@ collections:
             name: "productos"
             widget: "list"
             summary: "{{fields.nombre}} — {{fields.categoria}}"
-            hint: "Editorial: agrega un producto, elige su categoría y subcategoría. La página los agrupa automáticamente."
+            hint: "Recarga esta página antes de agregar o borrar productos: así evitas sobrescribir cambios recientes. Cada producto lleva su categoría y subcategoría; la web los agrupa sola."
             fields:
               - { label: "Nombre del producto", name: "nombre", widget: "string" }
               - label: "Categoría"
