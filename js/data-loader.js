@@ -50,6 +50,27 @@
       return null;
     });
   }
+  /* El CMS guarda una lista plana de productos; se agrupan por categoría/subcategoría.
+     También acepta el formato anterior por categorías anidadas. */
+  function normalizar(data) {
+    if (!data) return { categorias: [] };
+    if (data.categorias) return data;
+    var cats = [];
+    (data.productos || []).forEach(function (p) {
+      var nc = p.categoria || "Otros";
+      var ns = p.subcategoria || "General";
+      var c = cats.filter(function (x) { return x.nombre === nc; })[0];
+      if (!c) { c = { nombre: nc, subcategorias: [] }; cats.push(c); }
+      var s = c.subcategorias.filter(function (x) { return x.nombre === ns; })[0];
+      if (!s) { s = { nombre: ns, productos: [] }; c.subcategorias.push(s); }
+      s.productos.push({
+        nombre: p.nombre, descripcion: p.descripcion, precio: p.precio,
+        unidad: p.unidad, imagen: p.imagen
+      });
+    });
+    return { categorias: cats };
+  }
+
   function precio(p) {
     var n = Number(p);
     return isFinite(n) ? "Q " + n.toLocaleString("es-GT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "Consultar";
@@ -68,7 +89,7 @@
     Promise.all([cargar("data/catalogo.json", "catalogo"), window.LAFRANJA.ready]).then(function (res) {
       var data = res[0];
       if (!data) { contenedor.innerHTML = avisoError("data/catalogo.json"); return; }
-      var cats = (data && data.categorias) || [];
+      var cats = normalizar(data).categorias || [];
       var filtros = document.getElementById("filtros");
       var buscador = document.getElementById("buscador");
       var params = new URLSearchParams(location.search);
@@ -149,7 +170,7 @@
   function iniciarCategorias(contenedor) {
     cargar("data/catalogo.json", "catalogo").then(function (data) {
       if (!data) { contenedor.innerHTML = avisoError("data/catalogo.json"); return; }
-      var cats = (data && data.categorias) || [];
+      var cats = normalizar(data).categorias || [];
       contenedor.innerHTML = cats.map(function (c) {
         var s = slug(c.nombre);
         return '<a class="glass card cat-card" href="productos.html?cat=' + s + '"><div class="icon">' + (ICONOS[s] || "📦") +
