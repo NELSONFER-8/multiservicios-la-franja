@@ -44,6 +44,15 @@
       "precio": 1775,
       "unidad": "UNIDAD",
       "imagen": "/img/uploads/11029.jpg"
+    },
+    {
+      "nombre": "LAMINA TROQUELADA TR101",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "descripcion": "Lamina Calibre 26 0.38 ancho util de 100cm",
+      "precio": 20,
+      "unidad": "PIE ",
+      "imagen": "/img/uploads/tr101.jpg"
     }
   ]
 }
