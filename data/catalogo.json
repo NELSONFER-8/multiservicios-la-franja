@@ -3,7 +3,7 @@
     {
       "nombre": "DESMALEZADORA 33CC TRUPER 12497",
       "precio": 1100,
-      "categoria": "FERRETERIA GENERAL",
+      "categoria": "FERRETERÍA GENERAL",
       "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima1.2hp",
       "unidad": "unidad",
@@ -11,7 +11,7 @@
     },
     {
       "nombre": "DESMALEZADORA 33CC TRUPER 11029",
-      "categoria": "FERRETERIA GENERAL",
+      "categoria": "FERRETERÍA GENERAL",
       "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima 1.4hp",
       "precio": 1635,
@@ -20,7 +20,7 @@
     },
     {
       "nombre": "DESMALEZADORA 43CC TRUPER 11031",
-      "categoria": "FERRETERIA GENERAL",
+      "categoria": "FERRETERÍA GENERAL",
       "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima 1.7hp",
       "precio": 1700,
@@ -38,20 +38,12 @@
     },
     {
       "nombre": "DESMALEZADORA 52CC TRUPER 11032",
-      "categoria": "FERRETERIA GENERAL",
-      "subcategoria": "DESMALEZADORAS ",
+      "categoria": "FERRETERÍA GENERAL",
+      "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima 2hp",
       "precio": 1775,
       "unidad": "UNIDAD",
       "imagen": "/img/uploads/11029.jpg"
-    },
-    {
-      "nombre": "PRUEBA RELACION TEMPORAL",
-      "categoria": "FERRETERÍA GENERAL",
-      "subcategoria": "DESMALEZADORAS",
-      "descripcion": "prueba temporal",
-      "precio": 1,
-      "unidad": "unidad"
     }
   ]
 }
