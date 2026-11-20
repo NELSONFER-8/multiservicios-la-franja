@@ -167,11 +167,15 @@ h1 em,h2 em{background:var(--grad-amber);-webkit-background-clip:text;background
 .search::placeholder,.field::placeholder{color:#7f90ae}
 ::selection{background:var(--amber-2);color:#1b1303}
 
-/* Tamaño del Logo en el menú */
+/* Ajustes finales para el Logo y el Menú */
 .logo-img {
   height: 55px; 
   width: auto;
   max-width: 220px;
   object-fit: contain;
   display: block;
+}
+
+.nav {
+  list-style: none; /* Quita los puntitos si aparecen */
 }
