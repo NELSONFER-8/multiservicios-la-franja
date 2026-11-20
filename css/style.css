@@ -166,10 +166,12 @@ h1 em,h2 em{background:var(--grad-amber);-webkit-background-clip:text;background
 .btn-wa{background:linear-gradient(135deg,#34e27a,#16b659);color:#04210f}
 .search::placeholder,.field::placeholder{color:#7f90ae}
 ::selection{background:var(--amber-2);color:#1b1303}
+
+/* Tamaño del Logo en el menú */
 .logo-img {
-  height: 50px !important;
-  width: auto !important;
-  max-width: 200px;
+  height: 55px; 
+  width: auto;
+  max-width: 220px;
   object-fit: contain;
   display: block;
 }
