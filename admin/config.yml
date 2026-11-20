@@ -93,8 +93,8 @@ collections:
             fields:
               - label: "Nombre de la categoría"
                 name: "nombre"
-                widget: "select"
-                options: ["FERRETERÍA GENERAL", "VIDRIERÍA", "HERRERÍA", "LÁMINAS Y PERFILES", "MOLDURA"]
+                widget: "string"
+                hint: "Escribe el nombre de la categoría. Puedes crear categorías nuevas."
               - label: "Subcategorías"
                 name: "subcategorias"
                 widget: "list"

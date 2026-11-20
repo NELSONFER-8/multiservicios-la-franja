@@ -4,6 +4,6 @@
 
 # Los datos editados en el CMS deben verse de inmediato.
 [[headers]]
-  for = "data/*.json"
+  for = "/data/*.json"
   [headers.values]
-    Cache-Control = "no-cache"
+    Cache-Control = "no-cache, no-store, must-revalidate"

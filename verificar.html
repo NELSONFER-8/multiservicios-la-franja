@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Verificación del sitio | LA FRANJA</title>
+  <style>
+    :root{--bg:#0a1020;--card:#12284a;--ok:#25d366;--bad:#f87171;--txt:#e8eef9;--mut:#9fb0cc;--amb:#fbbf24}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:linear-gradient(160deg,#0a1020,#0f1d38 55%,#12284a);color:var(--txt);min-height:100vh;padding:32px 16px;line-height:1.6}
+    .wrap{max-width:760px;margin:auto}
+    h1{font-size:1.9rem;margin-bottom:8px}
+    .sub{color:var(--mut);margin-bottom:24px}
+    .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
+    .icon{font-size:1.3rem;line-height:1.4;flex:0 0 auto}
+    .card strong{display:block;margin-bottom:2px}
+    .card small{color:var(--mut);display:block;word-break:break-word}
+    .card.ok{border-color:rgba(37,211,102,.45)}
+    .card.bad{border-color:rgba(248,113,113,.55);background:rgba(248,113,113,.08)}
+    .resumen{margin-top:22px;padding:20px;border-radius:16px;background:var(--card);font-size:1.05rem}
+    .resumen b{color:var(--amb)}
+    button{margin-top:18px;padding:11px 20px;border:0;border-radius:12px;background:var(--amb);color:#1b1303;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit}
+    .aviso{margin-top:18px;color:var(--mut);font-size:.92rem}
+    code{background:rgba(0,0,0,.3);padding:2px 6px;border-radius:6px;color:var(--amb)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🔍 Verificación del sitio</h1>
+    <p class="sub">Esta página revisa que los archivos nuevos estén realmente publicados. Ábrela en el mismo sitio donde ves la tienda (por ejemplo <code> Tusitio.netlify.app/verificar.html</code>).</p>
+    <div id="resultados"><div class="card"><span class="icon">⏳</span><div><strong>Cargando comprobaciones…</strong><small>Espera unos segundos.</small></div></div></div>
+    <div class="resumen" id="resumen">Revisando…</div>
+    <button type="button" onclick="location.reload()">Volver a revisar</button>
+    <p class="aviso">Si algo sale en rojo, vuelve a subir <b>todos</b> los archivos de la carpeta al servidor y espera a que termine el despliegue. Esta página no modifica nada.</p>
+  </div>
+
+  <script src="js/site.js"></script>
+  <script>
+    (function () {
+      var box = document.getElementById("resultados");
+      var resumen = document.getElementById("resumen");
+      var resultados = [];
+
+      function getText(url) {
+        return fetch(url + "?v=" + Date.now(), { cache: "no-store" }).then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status + " — el archivo no existe en el servidor");
+          return r.text();
+        });
+      }
+
+      function check(nombre, fn) {
+        return Promise.resolve().then(fn).then(function (detalle) {
+         _results(true, nombre, detalle);
+        }).catch(function (err) {
+          _results(false, nombre, err.message || String(err));
+        });
+      }
+
+      function _results(ok, nombre, detalle) {
+        resultados.push(ok);
+        var d = document.createElement("div");
+        d.className = "card " + (ok ? "ok" : "bad");
+        d.innerHTML = '<span class="icon">' + (ok ? "✅" : "❌") + "</span><div><strong></strong><small></small></div>";
+        d.querySelector("strong").textContent = nombre;
+        d.querySelector("small").textContent = detalle;
+        box.appendChild(d);
+        var buenos = resultados.filter(Boolean).length;
+        resumen.innerHTML = "Archivos correctos: <b>" + buenos + " de " + resultados.length + "</b>" +
+          (buenos === resultados.length ? " 🎉 Todo está actualizado." : " — vuelve a subir los archivos que salen en rojo.");
+      }
+
+      box.innerHTML = "";
+      check("Código principal (js/site.js)", function () {
+        var v = window.LAFRANJA && window.LAFRANJA.VERSION;
+        if (v !== "2.0") throw new Error("Se detectó una versión antigua o el archivo no cargó. Valor: " + JSON.stringify(v));
+        return "Versión 2.0 cargada correctamente.";
+      }).then(function () {
+        return check("Cabecera y colores (js/main.js)", function () {
+          return getText("js/main.js").then(function (t) {
+            if (t.indexOf("aplicarColores") === -1 || t.indexOf("logoHTML") === -1) throw new Error("Es la versión anterior del archivo.");
+            return "Incluye logotipo y colores configurables.";
+          });
+        });
+      }).then(function () {
+        return check("Carga de productos (js/data-loader.js)", function () {
+          return getText("js/data-loader.js").then(function (t) {
+            if (t.indexOf("avisoError") === -1 || t.indexOf("no-store") === -1) throw new Error("Es la versión anterior del archivo.");
+            if (t.indexOf('js\\/[^/]*$') === -1) throw new Error("Falta la corrección de rutas de datos.");
+            return "Incluye la corrección que permite ver productos nuevos.";
+          });
+        });
+      }).then(function () {
+        return check("Inicio con espacio para el logo (index.html)", function () {
+          return getText("index.html").then(function (t) {
+            if (t.indexOf('data-lafanja="logo"') === -1) throw new Error("Es la versión anterior del archivo.");
+            return "Listo para mostrar el logotipo.";
+          });
+        });
+      }).then(function () {
+        return check("Panel de administración (admin/config.yml)", function () {
+          return getText("admin/config.yml").then(function (t) {
+            if (t.indexOf("Colores del sitio") === -1 || t.indexOf("Logotipo") === -1) throw new Error("Es la versión anterior del archivo.");
+            return "Incluye logotipo, colores y categorías libres.";
+          });
+        });
+      }).then(function () {
+        return check("Caché de datos (netlify.toml / _headers)", function () {
+          return getText("netlify.toml").then(function (t) {
+            if (t.indexOf('for = "/data/*.json"') === -1) throw new Error("Falta la regla de caché correcta en netlify.toml.");
+            return "Los cambios del CMS se publican sin esperar caché.";
+          });
+        });
+      }).then(function () {
+        return check("Datos del negocio (data/site.json)", function () {
+          return getText("data/site.json").then(function (t) {
+            var d = JSON.parse(t);
+            if (!d.colores || !("logo" in d)) throw new Error("Es la versión anterior del archivo.");
+            return "Colores: " + Object.keys(d.colores).length + " configurables. Logo: " + (d.logo ? d.logo : "sin subir (muestra el emoji)") + ".";
+          });
+        });
+      }).then(function () {
+        return check("Catálogo que ve la página (data/catalogo.json)", function () {
+          return getText("data/catalogo.json").then(function (t) {
+            var d = JSON.parse(t);
+            var cats = (d.categorias || []).length;
+            var prods = 0, nombres = [];
+            (d.categorias || []).forEach(function (c) {
+              (c.subcategorias || []).forEach(function (s) {
+                (s.productos || []).forEach(function (p) { prods++; nombres.push(p.nombre); });
+              });
+            });
+            if (!cats) throw new Error("El catálogo está vacío.");
+            return cats + " categorías, " + prods + " productos. Ejemplos: " + nombres.slice(0, 4).join(", ") + ".";
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

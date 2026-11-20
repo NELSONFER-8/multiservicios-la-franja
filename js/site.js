@@ -107,8 +107,15 @@
     return waNumero().replace(/^502/, "").replace(/([0-9]{4})([0-9]{4}).*/, "$1-$2");
   }
 
+  /* Ruta basada en este script y sin caché, para que los cambios del CMS se vean siempre. */
+  var script = document.currentScript || document.querySelector('script[src*="site.js"]');
+  var SRC = script && script.getAttribute("src") ? script.getAttribute("src") : "js/site.js";
+  /* Los JSON están al mismo nivel que la carpeta js/, no dentro de ella. */
+  var BASE = SRC.replace(/^(.*\/)?js\/[^/]*$/, function (_, prefix) { return prefix || ""; });
+  if (BASE === SRC) BASE = "";
+
   /* La promesa siempre resuelve: si falla la carga se registran los valores por defecto. */
-  var ready = fetch("data/site.json").then(function (r) {
+  var ready = fetch(BASE + "data/site.json?v=" + Date.now(), { cache: "no-store" }).then(function (r) {
     if (!r.ok) throw new Error("HTTP " + r.status + " al cargar data/site.json");
     return r.json();
   }).then(function (d) {
@@ -120,6 +127,7 @@
   });
 
   window.LAFRANJA = {
+    VERSION: "2.0",
     settings: settings,
     defaults: DEFAULTS,
     ready: ready,
