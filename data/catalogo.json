@@ -53,6 +53,15 @@
       "precio": 20,
       "unidad": "PIE ",
       "imagen": "/img/uploads/tr101.jpg"
+    },
+    {
+      "nombre": "LAMINA TROQUELADA METALUM",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "descripcion": "lamina de aluminio calibre 26 0.32 ancho util de 100cm",
+      "precio": 17,
+      "unidad": "PIE",
+      "imagen": "/img/uploads/tr101.jpg"
     }
   ]
 }
