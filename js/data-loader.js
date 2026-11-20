@@ -59,9 +59,12 @@
     (data.productos || []).forEach(function (p) {
       var nc = p.categoria || "Otros";
       var ns = p.subcategoria || "General";
-      var c = cats.filter(function (x) { return x.nombre === nc; })[0];
+      /* Une variantes del mismo nombre (mayúsculas, tildes, espacios) para no
+         crear categorías duplicadas cuando se escriben de forma distinta. */
+      var kc = slug(nc), ks = slug(ns);
+      var c = cats.filter(function (x) { return slug(x.nombre) === kc; })[0];
       if (!c) { c = { nombre: nc, subcategorias: [] }; cats.push(c); }
-      var s = c.subcategorias.filter(function (x) { return x.nombre === ns; })[0];
+      var s = c.subcategorias.filter(function (x) { return slug(x.nombre) === ks; })[0];
       if (!s) { s = { nombre: ns, productos: [] }; c.subcategorias.push(s); }
       s.productos.push({
         nombre: p.nombre, descripcion: p.descripcion, precio: p.precio,
