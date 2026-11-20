@@ -1,3 +1,13 @@
 {
-  "productos": []
+  "productos": [
+    {
+      "categoria": "FERRETERIA GENERAL",
+      "subcategoria": "DESMALEZADORAS",
+      "descripcion": "Motor a gasolina 2t, potencia maxima 3hp",
+      "precio": 1940,
+      "unidad": "UNIDAD",
+      "imagen": "/img/uploads/des-63.jpg",
+      "nombre": "DESMALEZADORA 63CC TRUPER 12671"
+    }
+  ]
 }
