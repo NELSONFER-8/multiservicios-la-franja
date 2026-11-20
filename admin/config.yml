@@ -86,31 +86,22 @@ collections:
         file: "data/catalogo.json"
         format: "json"
         fields:
-          - label: "Categorías"
-            name: "categorias"
+          - label: "Productos"
+            name: "productos"
             widget: "list"
-            summary: "{{fields.nombre}}"
+            summary: "{{fields.nombre}} — {{fields.categoria}}"
+            hint: "Editorial: agrega un producto, elige su categoría y subcategoría. La página los agrupa automáticamente."
             fields:
-              - label: "Nombre de la categoría"
-                name: "nombre"
+              - { label: "Nombre del producto", name: "nombre", widget: "string" }
+              - label: "Categoría"
+                name: "categoria"
                 widget: "string"
-                hint: "Escribe el nombre de la categoría. Puedes crear categorías nuevas."
-              - label: "Subcategorías"
-                name: "subcategorias"
-                widget: "list"
-                summary: "{{fields.nombre}}"
-                fields:
-                  - { label: "Nombre de la subcategoría", name: "nombre", widget: "string" }
-                  - label: "Productos"
-                    name: "productos"
-                    widget: "list"
-                    summary: "{{fields.nombre}} - Q{{fields.precio}}"
-                    fields:
-                      - { label: "Nombre", name: "nombre", widget: "string" }
-                      - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
-                      - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
-                      - { label: "Unidad (metro, unidad, m²...)", name: "unidad", widget: "string" }
-                      - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
+                hint: "Ej. FERRETERÍA GENERAL. Escribe igual el nombre para agrupar productos. Puedes crear categorías nuevas."
+              - { label: "Subcategoría", name: "subcategoria", widget: "string", hint: "Ej. Herramientas manuales." }
+              - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
+              - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
+              - { label: "Unidad (metro, unidad, m²...)", name: "unidad", widget: "string" }
+              - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
 
   - name: "servicios"
     label: "Servicios"
