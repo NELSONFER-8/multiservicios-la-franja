@@ -1,11 +1,10 @@
 {
   "inicio": {
     "eyebrow": "Raxruhá · Alta Verapaz",
-    "categoriasTitulo1": "Nuestras",
-    "categoriasTitulo2": "categorías",
-    "categoriasIntro": "Elige una categoría para ver el catálogo.",
     "porQueTitulo1": "¿Por qué",
     "porQueTitulo2": "elegirnos?",
+    "categoriasIntro": "Elige una categoría para ver el catálogo.",
+    "botonProductos": "Ver productos",
     "ventajas": [
       {
         "icono": "📍",
@@ -23,14 +22,15 @@
         "texto": "Vidrio y herrería hechos según lo que necesitas."
       }
     ],
-    "botonProductos": "Ver productos",
+    "verCategoria": "Ver productos →",
     "botonContacto": "Contáctanos",
-    "verCategoria": "Ver productos →"
+    "categoriasTitulo1": "Nuestras",
+    "categoriasTitulo2": "categorías"
   },
   "productos": {
     "titulo1": "Nuestro",
     "titulo2": "catálogo",
-    "intro": "Precios en Quetzales. Para confirmar existencias o pedir cotización, escríbenos por WhatsApp.",
+    "intro": "Para confirmar existencias o pedir cotización, escríbenos por WhatsApp.",
     "buscador": "Buscar producto…",
     "vacio": "No se encontraron productos."
   },
@@ -54,7 +54,7 @@
       {
         "icono": "🧰",
         "titulo": "Variedad",
-        "texto": "Cinco líneas de productos y servicios en un solo lugar."
+        "texto": "Productos y servicios en un solo lugar"
       },
       {
         "icono": "⭐",
