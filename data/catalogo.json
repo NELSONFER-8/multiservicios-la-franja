@@ -44,6 +44,14 @@
       "precio": 1775,
       "unidad": "UNIDAD",
       "imagen": "/img/uploads/11029.jpg"
+    },
+    {
+      "nombre": "PRUEBA RELACION TEMPORAL",
+      "categoria": "FERRETERÍA GENERAL",
+      "subcategoria": "DESMALEZADORAS",
+      "descripcion": "prueba temporal",
+      "precio": 1,
+      "unidad": "unidad"
     }
   ]
 }
