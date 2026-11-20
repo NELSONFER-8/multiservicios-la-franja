@@ -71,6 +71,15 @@
       }
 
       box.innerHTML = "";
+
+      if (location.protocol === "file:") {
+        box.innerHTML = '<div class="card bad"><span class="icon">⚠️</span><div><strong>Estás abriendo el archivo desde tu computadora</strong>' +
+          '<small>El navegador bloquea la lectura de archivos en modo local, por eso las comprobaciones no funcionan. ' +
+          'Abre esta misma página desde tu sitio publicado: https://TU-SITIO.netlify.app/verificar.html</small></div></div>';
+        resumen.textContent = "Modo local: abre la página desde el sitio publicado para verificar.";
+        return;
+      }
+
       check("Código principal (js/site.js)", function () {
         var v = window.LAFRANJA && window.LAFRANJA.VERSION;
         if (v !== "2.0") throw new Error("Se detectó una versión antigua o el archivo no cargó. Valor: " + JSON.stringify(v));
@@ -123,15 +132,23 @@
         return check("Catálogo que ve la página (data/catalogo.json)", function () {
           return getText("data/catalogo.json").then(function (t) {
             var d = JSON.parse(t);
-            var cats = (d.categorias || []).length;
-            var prods = 0, nombres = [];
-            (d.categorias || []).forEach(function (c) {
-              (c.subcategorias || []).forEach(function (s) {
-                (s.productos || []).forEach(function (p) { prods++; nombres.push(p.nombre); });
+            var nombres = (d.productos || []).map(function (p) { return p.nombre; });
+            var cats = [];
+            if (d.productos) {
+              d.productos.forEach(function (p) {
+                var c = p.categoria || "Otros";
+                if (cats.indexOf(c) === -1) cats.push(c);
               });
-            });
-            if (!cats) throw new Error("El catálogo está vacío.");
-            return cats + " categorías, " + prods + " productos. Ejemplos: " + nombres.slice(0, 4).join(", ") + ".";
+            } else {
+              (d.categorias || []).forEach(function (c) {
+                cats.push(c.nombre);
+                (c.subcategorias || []).forEach(function (s) {
+                  (s.productos || []).forEach(function (p) { nombres.push(p.nombre); });
+                });
+              });
+            }
+            if (!nombres.length) throw new Error("El catálogo está vacío: no hay productos publicados.");
+            return cats.length + " categorías, " + nombres.length + " productos. Ejemplos: " + nombres.slice(0, 4).join(", ") + ".";
           });
         });
       });
