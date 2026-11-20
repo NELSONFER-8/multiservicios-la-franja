@@ -135,7 +135,7 @@
           });
           if (bloqueSubs) html += '<div class="cat-block" id="' + s + '"><h2>' + esc(c.nombre) + "</h2>" + bloqueSubs + "</div>";
         });
-        contenedor.innerHTML = html || '<p class="empty">No se encontraron productos.</p>';
+        contenedor.innerHTML = html || '<p class="empty">' + esc(window.LAFRANJA.resolve("paginas.productos.vacio", "No se encontraron productos.")) + "</p>";
       }
 
       dibujarFiltros();
@@ -165,7 +165,7 @@
       contenedor.innerHTML = lista.map(function (s) {
         return '<article class="glass card"><div class="icon">' + esc(s.icono || "🔧") + "</div><h3>" +
           esc(s.titulo) + "</h3><p>" + esc(s.descripcion) + "</p></article>";
-      }).join("") || '<p class="empty">Pronto publicaremos nuestros servicios.</p>';
+      }).join("") || '<p class="empty">' + esc(window.LAFRANJA.resolve("paginas.servicios.vacio", "Pronto publicaremos nuestros servicios.")) + "</p>";
     });
   }
 
@@ -177,7 +177,7 @@
       contenedor.innerHTML = cats.map(function (c) {
         var s = slug(c.nombre);
         return '<a class="glass card cat-card" href="productos.html?cat=' + s + '"><div class="icon">' + (ICONOS[s] || "📦") +
-          "</div><h3>" + esc(c.nombre) + "</h3><p>Ver productos →</p></a>";
+          "</div><h3>" + esc(c.nombre) + "</h3><p>" + esc(window.LAFRANJA.resolve("paginas.inicio.verCategoria", "Ver productos →")) + "</p></a>";
       }).join("");
     });
   }

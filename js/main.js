@@ -38,8 +38,10 @@
 
   function links() {
     return PAGES.map(function (p) {
-      var active = p[0].replace(/\.html$/i, "") === current;
-      return '<li><a href="' + p[0] + '"' + (active ? ' class="active" aria-current="page"' : "") + ">" + p[1] + "</a></li>";
+      var key = p[0].replace(/\.html$/i, "");
+      var active = key === current;
+      var texto = get("paginas.comun.nav." + key, p[1]);
+      return '<li><a href="' + p[0] + '"' + (active ? ' class="active" aria-current="page"' : "") + ">" + esc(texto) + "</a></li>";
     }).join("");
   }
 
@@ -92,8 +94,8 @@
     var logo = src ? '<img class="footer-logo" src="' + esc(src) + '" alt="' + nombre + '">' : "";
     return '<footer class="site-footer"><div class="container"><div class="footer-grid">' +
       "<div>" + logo + "<h4>" + nombre + "</h4><p>" + esc(get("pie.descripcion", "")) + "</p></div>" +
-      "<div><h4>Ubicación</h4><p>" + esc(get("contacto.direccion", "")) + "</p></div>" +
-      "<div><h4>Teléfonos</h4>" + (telefonosHTML() || '<a href="' + esc(L.waLink()) + '">WhatsApp</a>') + "</div>" +
+      "<div><h4>" + esc(get("paginas.comun.footerUbicacion", "Ubicación")) + "</h4><p>" + esc(get("contacto.direccion", "")) + "</p></div>" +
+      "<div><h4>" + esc(get("paginas.comun.footerTelefonos", "Teléfonos")) + "</h4>" + (telefonosHTML() || '<a href="' + esc(L.waLink()) + '">WhatsApp</a>') + "</div>" +
       "</div><p class=\"copy\">© " + new Date().getFullYear() + " " + nombre + ". Todos los derechos reservados.</p></div></footer>";
   }
 
@@ -127,7 +129,8 @@
           node.innerHTML = src ? '<img src="' + esc(src) + '" alt="' + esc(get("nombre", "")) + '">' : "";
           break;
         case "contacto.direccion":
-          node.innerHTML = esc(val) + '<br><a target="_blank" rel="noopener" href="' + esc(get("contacto.mapaUrl", "#")) + '">Ver en Google Maps</a>';
+          node.innerHTML = esc(val) + '<br><a target="_blank" rel="noopener" href="' + esc(get("contacto.mapaUrl", "#")) + '">' +
+            esc(get("paginas.comun.verMapa", "Ver en Google Maps")) + "</a>";
           break;
         case "contacto.telefonos":
           node.innerHTML = telefonosHTML() || "<span>Contáctanos por WhatsApp</span>";
@@ -147,7 +150,12 @@
           if (node.tagName === "A" && node.hasAttribute("data-wa-text")) {
             node.href = L.waLink(node.getAttribute("data-wa-text"));
           }
-          node.textContent = val;
+          if (node.tagName === "INPUT" || node.tagName === "TEXTAREA") {
+            node.placeholder = get(key, node.getAttribute("placeholder") || "");
+          } else {
+            /* Si falta el dato, se conserva el texto original del HTML. */
+            node.textContent = get(key, (node.textContent || "").trim());
+          }
       }
     });
   }

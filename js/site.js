@@ -35,6 +35,8 @@
     pie: {
       descripcion: "Ferretería, vidriería, herrería, láminas, perfiles y molduras."
     },
+    /* Textos de las páginas: se cargan desde data/paginas.json (ver admin). */
+    paginas: {},
     colores: {
       fondo1: "#0a1020",
       fondo2: "#0f1d38",
@@ -114,15 +116,25 @@
   var BASE = SRC.replace(/^(.*\/)?js\/[^/]*$/, function (_, prefix) { return prefix || ""; });
   if (BASE === SRC) BASE = "";
 
-  /* La promesa siempre resuelve: si falla la carga se registran los valores por defecto. */
-  var ready = fetch(BASE + "data/site.json?v=" + Date.now(), { cache: "no-store" }).then(function (r) {
-    if (!r.ok) throw new Error("HTTP " + r.status + " al cargar data/site.json");
-    return r.json();
-  }).then(function (d) {
+  function loadData(file) {
+    return fetch(BASE + "data/" + file + "?v=" + Date.now(), { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status + " al cargar data/" + file);
+      return r.json();
+    });
+  }
+
+  /* La promesa siempre resuelve: si falla un archivo se conservan los textos del HTML. */
+  var ready = loadData("site.json").then(function (d) {
     deepMerge(settings, d || {});
-    return settings;
   }).catch(function (err) {
     console.error("[LA FRANJA] No se pudo cargar data/site.json. Se usan los valores por defecto.", err);
+  }).then(function () {
+    return loadData("paginas.json").then(function (d) {
+      deepMerge(settings.paginas, d || {});
+    }).catch(function (err) {
+      console.error("[LA FRANJA] No se pudo cargar data/paginas.json. Se conservan los textos del HTML.", err);
+    });
+  }).then(function () {
     return settings;
   });
 
