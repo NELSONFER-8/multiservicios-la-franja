@@ -8,6 +8,15 @@
       "precio": 1940,
       "unidad": "UNIDAD",
       "imagen": "/img/uploads/des-63.jpg"
+    },
+    {
+      "nombre": "DESMALEZADORA 33CC TRUPER 12497",
+      "precio": 1100,
+      "categoria": "FERRETERIA GENERAL",
+      "subcategoria": "DESMALEZADORAS",
+      "descripcion": "motor a gasolina2t, potencia maxima1.2hp",
+      "unidad": "unidad",
+      "imagen": "https://www.lumienlinea.com/products/desbrozadora-a-gasolina-30cc-17-de-corte-recto-truper?srsltid=AYCX9vL80SU1jPuWYxcMUNFocMNsE8PD2hM44sfNj2Il_fVmbbpk2g8H"
     }
   ]
 }
