@@ -4,34 +4,86 @@
       "nombre": "FERRETERÍA GENERAL",
       "subcategorias": [
         {
-          "nombre": "CHAPEADORAS O DESMALEZADORAS",
+          "nombre": "Herramientas manuales",
           "productos": [
-            {
-              "nombre": "DESMALEZADORA TRUPER 63CC 12671",
-              "descripcion": "MOTOR A GASOLINA, 3HP POTENCIA MAXIMA",
-              "precio": 1940,
-              "unidad": "UNIDAD",
-              "imagen": "/img/uploads/des-63.jpg"
-            }
+            {"nombre": "Martillo de uña 16 oz", "descripcion": "Mango antideslizante, ideal para carpintería y construcción.", "precio": 65, "unidad": "unidad", "imagen": ""},
+            {"nombre": "Alicate universal 8\"", "descripcion": "Acero forjado con mangos aislados.", "precio": 55, "unidad": "unidad", "imagen": ""}
+          ]
+        },
+        {
+          "nombre": "Clavos y tornillos",
+          "productos": [
+            {"nombre": "Clavo de acero 3\"", "descripcion": "Clavo común para construcción.", "precio": 8, "unidad": "libra", "imagen": ""},
+            {"nombre": "Tornillo para madera 2\"", "descripcion": "Cabeza plana, paquete surtido.", "precio": 20, "unidad": "caja", "imagen": ""}
           ]
         }
       ]
     },
     {
       "nombre": "VIDRIERÍA",
-      "subcategorias": []
+      "subcategorias": [
+        {
+          "nombre": "Vidrio plano",
+          "productos": [
+            {"nombre": "Vidrio claro 3 mm", "descripcion": "Corte a la medida para ventanas y puertas.", "precio": 90, "unidad": "m²", "imagen": ""},
+            {"nombre": "Vidrio claro 6 mm", "descripcion": "Mayor resistencia para mesas y divisiones.", "precio": 150, "unidad": "m²", "imagen": ""}
+          ]
+        },
+        {
+          "nombre": "Espejos",
+          "productos": [
+            {"nombre": "Espejo 4 mm", "descripcion": "Espejo a la medida con bordes pulidos.", "precio": 180, "unidad": "m²", "imagen": ""}
+          ]
+        }
+      ]
     },
     {
       "nombre": "HERRERÍA",
-      "subcategorias": []
+      "subcategorias": [
+        {
+          "nombre": "Puertas y portones",
+          "productos": [
+            {"nombre": "Portón metálico", "descripcion": "Fabricado a la medida, con pintura anticorrosiva.", "precio": 1200, "unidad": "unidad", "imagen": ""}
+          ]
+        },
+        {
+          "nombre": "Ventanas y balcones",
+          "productos": [
+            {"nombre": "Balcón de hierro", "descripcion": "Diseño según tu espacio.", "precio": 350, "unidad": "m²", "imagen": ""}
+          ]
+        }
+      ]
     },
     {
       "nombre": "LÁMINAS Y PERFILES",
-      "subcategorias": []
+      "subcategorias": [
+        {
+          "nombre": "Láminas",
+          "productos": [
+            {"nombre": "Lámina galvanizada calibre 28", "descripcion": "Para techos, 10 pies.", "precio": 95, "unidad": "unidad", "imagen": ""},
+            {"nombre": "Lámina troquelada", "descripcion": "Acabado resistente a la intemperie.", "precio": 110, "unidad": "unidad", "imagen": ""}
+          ]
+        },
+        {
+          "nombre": "Perfiles",
+          "productos": [
+            {"nombre": "Perfil tubular cuadrado 1\"", "descripcion": "Tubo estructural de 6 metros.", "precio": 140, "unidad": "unidad", "imagen": ""},
+            {"nombre": "Ángulo de hierro 1\"", "descripcion": "Para estructuras y marcos.", "precio": 85, "unidad": "unidad", "imagen": ""}
+          ]
+        }
+      ]
     },
     {
       "nombre": "MOLDURA",
-      "subcategorias": []
+      "subcategorias": [
+        {
+          "nombre": "Molduras de madera",
+          "productos": [
+            {"nombre": "Moldura de pared", "descripcion": "Acabado liso, ideal para marcos y decoración.", "precio": 25, "unidad": "metro", "imagen": ""},
+            {"nombre": "Moldura para cuadros", "descripcion": "Varios estilos disponibles.", "precio": 18, "unidad": "metro", "imagen": ""}
+          ]
+        }
+      ]
     }
   ]
 }

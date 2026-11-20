@@ -22,18 +22,30 @@
   }
   function cargar(url, clave) {
     return fetch(url).then(function (r) {
-      if (!r.ok) throw new Error("HTTP " + r.status);
+      if (!r.ok) throw new Error("HTTP " + r.status + " al cargar " + url);
       return r.json();
-    }).catch(function () { return FALLBACK[clave]; });
+    }).catch(function (err) {
+      console.error("[LA FRANJA] No se pudo cargar " + url + ". Se muestran datos de respaldo.", err);
+      return FALLBACK[clave];
+    });
   }
   function precio(p) {
     var n = Number(p);
     return isFinite(n) ? "Q " + n.toLocaleString("es-GT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "Consultar";
   }
 
+  /* Mantiene el filtro en la URL para poder compartirlo y usar el botón "atrás". */
+  function setCatParam(cat) {
+    var u = new URL(location.href);
+    if (cat === "todos") u.searchParams.delete("cat");
+    else u.searchParams.set("cat", cat);
+    history.replaceState(null, "", u.pathname + u.search + u.hash);
+  }
+
   /* ---------- Productos ---------- */
   function iniciarProductos(contenedor) {
-    cargar("data/catalogo.json", "catalogo").then(function (data) {
+    Promise.all([cargar("data/catalogo.json", "catalogo"), window.LAFRANJA.ready]).then(function (res) {
+      var data = res[0];
       var cats = (data && data.categorias) || [];
       var filtros = document.getElementById("filtros");
       var buscador = document.getElementById("buscador");
@@ -66,7 +78,7 @@
                 ? '<img src="' + esc(String(p.imagen).replace(/^\//, "")) + '" alt="' + esc(p.nombre) + '" loading="lazy">'
                 : (ICONOS[s] || "📦");
               var msg = "Hola, quisiera cotizar: " + p.nombre + " (" + c.nombre + ").";
-              return '<article class="glass product"><div class="thumb' + (p.imagen ? ' has-img' : '') + '">' + img + '</div><div class="body">' +
+              return '<article class="glass product"><div class="thumb">' + img + '</div><div class="body">' +
                 "<h4>" + esc(p.nombre) + "</h4>" +
                 '<p class="desc">' + esc(p.descripcion) + "</p>" +
                 '<div class="price">' + precio(p.precio) + (p.unidad ? " <small>/ " + esc(p.unidad) + "</small>" : "") + "</div>" +
@@ -86,7 +98,10 @@
         var b = e.target.closest(".chip");
         if (!b) return;
         activa = b.getAttribute("data-cat");
-        dibujarFiltros();
+        Array.prototype.forEach.call(filtros.querySelectorAll(".chip"), function (chip) {
+          chip.classList.toggle("active", chip === b);
+        });
+        setCatParam(activa);
         dibujar();
       });
       if (buscador) buscador.addEventListener("input", function () {

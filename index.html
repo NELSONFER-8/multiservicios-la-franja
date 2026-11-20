@@ -1,107 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Inicio | MULTISERVICIOS LA FRANJA</title>
-  <meta name="description" content="Ferretería, vidriería, herrería, láminas, perfiles y molduras en Raxruhá, Alta Verapaz.">
-  
-  <link rel="icon" type="image/png" href="logo.png">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inicio | MULTISERVICIOS LA FRANJA</title>
+<meta name="description" content="Ferretería, vidriería, herrería, láminas, perfiles y molduras en Raxruhá, Alta Verapaz.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-
-  <!-- BARRA DE NAVEGACIÓN ÚNICA -->
-  <header class="site-header">
-    <div class="container">
-      <a href="index.html" class="brand">
-        <img src="logo.png" alt="MULTISERVICIOS LA FRANJA" class="logo-img">
-      </a>
-      <button class="nav-toggle" aria-label="Abrir menú" data-nav-toggle>☰</button>
-      <nav class="nav" data-nav>
-        <a href="index.html" class="active">Inicio</a>
-        <a href="productos.html">Productos</a>
-        <a href="servicios.html">Servicios</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="https://wa.me/50240507209" target="_blank" rel="noopener" class="btn-cta">Cotizar</a>
-      </nav>
+<main>
+  <section class="hero"><div class="container"><div class="glass hero-card">
+    <span class="eyebrow">Raxruhá · Alta Verapaz</span>
+    <h1><span data-lafanja="inicio.heroTitulo">Todo para tu obra en un solo lugar:</span> <em data-lafanja="inicio.heroDestacado">MULTISERVICIOS LA FRANJA</em></h1>
+    <p class="lead" data-lafanja="inicio.heroLead">Ferretería, vidriería, herrería, láminas, perfiles y molduras. Calidad y atención cercana para Raxruhá y municipios vecinos.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="productos.html">Ver productos</a>
+      <a class="btn btn-ghost" href="contacto.html">Contáctanos</a>
     </div>
-  </header>
+  </div></div></section>
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="glass hero-card">
-          <span class="eyebrow">Raxruhá · Alta Verapaz</span>
-          <h1>Todo para tu obra en un solo lugar: <em>MULTISERVICIOS LA FRANJA</em></h1>
-          <p class="lead">Ferretería, vidriería, herrería, láminas, perfiles y molduras. Calidad y atención cercana para Raxruhá y municipios vecinos.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="productos.html">Ver productos</a>
-            <a class="btn btn-ghost" href="contacto.html">Contáctanos</a>
-          </div>
-        </div>
-      </div>
-    </section>
+  <section><div class="container">
+    <div class="section-title"><h2>Nuestras <em>categorías</em></h2><p>Elige una categoría para ver el catálogo.</p></div>
+    <div class="grid grid-3" id="categorias-home"><p class="loading">Cargando…</p></div>
+  </div></section>
 
-    <section>
-      <div class="container">
-        <div class="section-title">
-          <h2>Nuestras <em>categorías</em></h2>
-          <p>Elige una categoría para ver el catálogo.</p>
-        </div>
-        <div class="grid grid-3" id="categorias-home">
-          <p class="loading">Cargando…</p>
-        </div>
-      </div>
-    </section>
+  <section><div class="container">
+    <div class="section-title"><h2>¿Por qué <em>elegirnos</em>?</h2></div>
+    <div class="grid grid-3">
+      <div class="glass card"><div class="icon">📍</div><h3>Cerca de ti</h3><p>Estamos en Aldea San Antonio Las Cuevas, Raxruhá.</p></div>
+      <div class="glass card"><div class="icon">🛡️</div><h3>Materiales de calidad</h3><p>Productos confiables para obras grandes y pequeñas.</p></div>
+      <div class="glass card"><div class="icon">📐</div><h3>Trabajos a la medida</h3><p>Vidrio y herrería hechos según lo que necesitas.</p></div>
+    </div>
+  </div></section>
 
-    <section>
-      <div class="container">
-        <div class="section-title">
-          <h2>¿Por qué <em>elegirnos</em>?</h2>
-        </div>
-        <div class="grid grid-3">
-          <div class="glass card">
-            <div class="icon">📍</div>
-            <h3>Cerca de ti</h3>
-            <p>Estamos en Aldea San Antonio Las Cuevas, Raxruhá.</p>
-          </div>
-          <div class="glass card">
-            <div class="icon">🛡️</div>
-            <h3>Materiales de calidad</h3>
-            <p>Productos confiables para obras grandes y pequeñas.</p>
-          </div>
-          <div class="glass card">
-            <div class="icon">📐</div>
-            <h3>Trabajos a la medida</h3>
-            <p>Vidrio y herrería hechos según lo que necesitas.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="glass cta">
-          <h2>¿Necesitas una cotización?</h2>
-          <p>Escríbenos por WhatsApp y te respondemos lo antes posible.</p>
-          <a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/50240507209?text=Hola%2C%20quisiera%20una%20cotizaci%C3%B3n.">Escribir por WhatsApp</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", function (user) {
-        if (!user) window.netlifyIdentity.on("login", function () { document.location.href = "/admin/"; });
-      });
-    }
-  </script>
-  <script src="js/main.js"></script>
-  <script src="js/data-loader.js"></script>
+  <section><div class="container"><div class="glass cta">
+    <h2 data-lafanja="inicio.ctaTitulo">¿Necesitas una cotización?</h2>
+    <p data-lafanja="inicio.ctaTexto">Escríbenos por WhatsApp y te respondemos lo antes posible.</p>
+    <a class="btn btn-wa" data-lafanja="inicio.ctaBoton" data-wa-text="Hola, quisiera una cotización." target="_blank" rel="noopener" href="https://wa.me/50240507209?text=Hola%2C%20quisiera%20una%20cotizaci%C3%B3n.">Escribir por WhatsApp</a>
+  </div></div></section>
+</main>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function (user) {
+      if (!user) window.netlifyIdentity.on("login", function () { document.location.href = "admin/"; });
+    });
+  }
+</script>
+<script src="js/site.js"></script>
+<script src="js/main.js"></script>
+<script src="js/data-loader.js"></script>
 </body>
 </html>

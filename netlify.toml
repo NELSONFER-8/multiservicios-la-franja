@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  command = ""
+
+# Los datos editados en el CMS deben verse de inmediato.
+[[headers]]
+  for = "data/*.json"
+  [headers.values]
+    Cache-Control = "no-cache"
