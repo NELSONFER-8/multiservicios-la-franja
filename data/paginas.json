@@ -1,0 +1,87 @@
+{
+  "inicio": {
+    "eyebrow": "Raxruhá · Alta Verapaz",
+    "categoriasTitulo1": "Nuestras",
+    "categoriasTitulo2": "categorías",
+    "categoriasIntro": "Elige una categoría para ver el catálogo.",
+    "porQueTitulo1": "¿Por qué",
+    "porQueTitulo2": "elegirnos?",
+    "ventajas": [
+      {
+        "icono": "📍",
+        "titulo": "Cerca de ti",
+        "texto": "Estamos en Aldea San Antonio Las Cuevas, Raxruhá."
+      },
+      {
+        "icono": "🛡️",
+        "titulo": "Materiales de calidad",
+        "texto": "Productos confiables para obras grandes y pequeñas."
+      },
+      {
+        "icono": "📐",
+        "titulo": "Trabajos a la medida",
+        "texto": "Vidrio y herrería hechos según lo que necesitas."
+      }
+    ],
+    "botonProductos": "Ver productos",
+    "botonContacto": "Contáctanos",
+    "verCategoria": "Ver productos →"
+  },
+  "productos": {
+    "titulo1": "Nuestro",
+    "titulo2": "catálogo",
+    "intro": "Precios en Quetzales. Para confirmar existencias o pedir cotización, escríbenos por WhatsApp.",
+    "buscador": "Buscar producto…",
+    "vacio": "No se encontraron productos."
+  },
+  "servicios": {
+    "titulo1": "Nuestros",
+    "titulo2": "servicios",
+    "intro": "Soluciones para tu casa, negocio u obra.",
+    "vacio": "Pronto publicaremos nuestros servicios."
+  },
+  "nosotros": {
+    "titulo1": "Sobre",
+    "titulo2": "nosotros",
+    "intro": "Un negocio de la comunidad, al servicio de la comunidad.",
+    "compromisoTitulo": "Nuestro compromiso",
+    "valores": [
+      {
+        "icono": "🤝",
+        "titulo": "Trato cercano",
+        "texto": "Te asesoramos para que compres lo que realmente necesitas."
+      },
+      {
+        "icono": "🧰",
+        "titulo": "Variedad",
+        "texto": "Cinco líneas de productos y servicios en un solo lugar."
+      },
+      {
+        "icono": "⭐",
+        "titulo": "Confianza",
+        "texto": "Trabajamos con responsabilidad y cumplimiento."
+      }
+    ]
+  },
+  "contacto": {
+    "titulo2": "Contáctanos",
+    "intro": "Llámanos, escríbenos por WhatsApp o visítanos.",
+    "datosTitulo": "Datos de contacto",
+    "formTitulo": "Envíanos un mensaje",
+    "nombreLabel": "Tu nombre",
+    "mensajeLabel": "¿Qué necesitas?",
+    "boton": "Enviar por WhatsApp"
+  },
+  "comun": {
+    "nav": {
+      "inicio": "Inicio",
+      "productos": "Productos",
+      "servicios": "Servicios",
+      "nosotros": "Nosotros",
+      "contacto": "Contacto"
+    },
+    "footerUbicacion": "Ubicación",
+    "footerTelefonos": "Teléfonos",
+    "verMapa": "Ver en Google Maps"
+  }
+}
