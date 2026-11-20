@@ -62,6 +62,15 @@
       "precio": 17,
       "unidad": "PIE",
       "imagen": "/img/uploads/tr101.jpg"
+    },
+    {
+      "nombre": "LAMINA TROQUELADA MULTI ROJO",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
+      "precio": 23,
+      "unidad": "PIE",
+      "imagen": "/img/uploads/multi-rojo.jpg"
     }
   ]
 }
