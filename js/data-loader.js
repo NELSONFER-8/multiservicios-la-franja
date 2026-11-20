@@ -66,7 +66,7 @@
                 ? '<img src="' + esc(String(p.imagen).replace(/^\//, "")) + '" alt="' + esc(p.nombre) + '" loading="lazy">'
                 : (ICONOS[s] || "📦");
               var msg = "Hola, quisiera cotizar: " + p.nombre + " (" + c.nombre + ").";
-              return '<article class="glass product"><div class="thumb">' + img + '</div><div class="body">' +
+              return '<article class="glass product"><div class="thumb' + (p.imagen ? ' has-img' : '') + '">' + img + '</div><div class="body">' +
                 "<h4>" + esc(p.nombre) + "</h4>" +
                 '<p class="desc">' + esc(p.descripcion) + "</p>" +
                 '<div class="price">' + precio(p.precio) + (p.unidad ? " <small>/ " + esc(p.unidad) + "</small>" : "") + "</div>" +
