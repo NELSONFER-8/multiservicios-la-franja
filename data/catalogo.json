@@ -2,7 +2,20 @@
   "categorias": [
     {
       "nombre": "FERRETERÍA GENERAL",
-      "subcategorias": []
+      "subcategorias": [
+        {
+          "nombre": "DESMALESADORAS ",
+          "productos": [
+            {
+              "nombre": "DESMALEZADORA TRUPER 63CC 12671",
+              "descripcion": "MOTOR A GASOLINA 2T, 3HP POTENCIA",
+              "precio": 1940,
+              "imagen": "/img/uploads/des-63.jpg",
+              "unidad": "UNIDAD"
+            }
+          ]
+        }
+      ]
     },
     {
       "nombre": "VIDRIERÍA",
