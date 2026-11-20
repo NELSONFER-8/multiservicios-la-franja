@@ -7,32 +7,31 @@
 <meta name="description" content="Ferretería, vidriería, herrería, láminas, perfiles y molduras en Raxruhá, Alta Verapaz.">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 <main>
   <section class="hero"><div class="container"><div class="glass hero-card">
     <div class="hero-logo" data-lafanja="logo"></div>
-    <span class="eyebrow">Raxruhá · Alta Verapaz</span>
+    <span class="eyebrow" data-lafanja="paginas.inicio.eyebrow">Raxruhá · Alta Verapaz</span>
     <h1><span data-lafanja="inicio.heroTitulo">Todo para tu obra en un solo lugar:</span> <em data-lafanja="inicio.heroDestacado">MULTISERVICIOS LA FRANJA</em></h1>
     <p class="lead" data-lafanja="inicio.heroLead">Ferretería, vidriería, herrería, láminas, perfiles y molduras. Calidad y atención cercana para Raxruhá y municipios vecinos.</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="productos.html">Ver productos</a>
-      <a class="btn btn-ghost" href="contacto.html">Contáctanos</a>
+      <a class="btn btn-primary" href="productos.html" data-lafanja="paginas.inicio.botonProductos">Ver productos</a>
+      <a class="btn btn-ghost" href="contacto.html" data-lafanja="paginas.inicio.botonContacto">Contáctanos</a>
     </div>
   </div></div></section>
 
   <section><div class="container">
-    <div class="section-title"><h2>Nuestras <em>categorías</em></h2><p>Elige una categoría para ver el catálogo.</p></div>
+    <div class="section-title"><h2><span data-lafanja="paginas.inicio.categoriasTitulo1">Nuestras</span> <em data-lafanja="paginas.inicio.categoriasTitulo2">categorías</em></h2><p data-lafanja="paginas.inicio.categoriasIntro">Elige una categoría para ver el catálogo.</p></div>
     <div class="grid grid-3" id="categorias-home"><p class="loading">Cargando…</p></div>
   </div></section>
 
   <section><div class="container">
-    <div class="section-title"><h2>¿Por qué <em>elegirnos</em>?</h2></div>
+    <div class="section-title"><h2><span data-lafanja="paginas.inicio.porQueTitulo1">¿Por qué</span> <em data-lafanja="paginas.inicio.porQueTitulo2">elegirnos?</em></h2></div>
     <div class="grid grid-3">
-      <div class="glass card"><div class="icon">📍</div><h3>Cerca de ti</h3><p>Estamos en Aldea San Antonio Las Cuevas, Raxruhá.</p></div>
-      <div class="glass card"><div class="icon">🛡️</div><h3>Materiales de calidad</h3><p>Productos confiables para obras grandes y pequeñas.</p></div>
-      <div class="glass card"><div class="icon">📐</div><h3>Trabajos a la medida</h3><p>Vidrio y herrería hechos según lo que necesitas.</p></div>
+      <div class="glass card"><div class="icon" data-lafanja="paginas.inicio.ventajas.0.icono">📍</div><h3 data-lafanja="paginas.inicio.ventajas.0.titulo">Cerca de ti</h3><p data-lafanja="paginas.inicio.ventajas.0.texto">Estamos en Aldea San Antonio Las Cuevas, Raxruhá.</p></div>
+      <div class="glass card"><div class="icon" data-lafanja="paginas.inicio.ventajas.1.icono">🛡️</div><h3 data-lafanja="paginas.inicio.ventajas.1.titulo">Materiales de calidad</h3><p data-lafanja="paginas.inicio.ventajas.1.texto">Productos confiables para obras grandes y pequeñas.</p></div>
+      <div class="glass card"><div class="icon" data-lafanja="paginas.inicio.ventajas.2.icono">📐</div><h3 data-lafanja="paginas.inicio.ventajas.2.titulo">Trabajos a la medida</h3><p data-lafanja="paginas.inicio.ventajas.2.texto">Vidrio y herrería hechos según lo que necesitas.</p></div>
     </div>
   </div></section>
 
@@ -42,13 +41,6 @@
     <a class="btn btn-wa" data-lafanja="inicio.ctaBoton" data-wa-text="Hola, quisiera una cotización." target="_blank" rel="noopener" href="https://wa.me/50240507209?text=Hola%2C%20quisiera%20una%20cotizaci%C3%B3n.">Escribir por WhatsApp</a>
   </div></div></section>
 </main>
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", function (user) {
-      if (!user) window.netlifyIdentity.on("login", function () { document.location.href = "admin/"; });
-    });
-  }
-</script>
 <script src="js/site.js"></script>
 <script src="js/main.js"></script>
 <script src="js/data-loader.js"></script>
