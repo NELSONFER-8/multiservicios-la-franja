@@ -1,0 +1,10 @@
+{
+  "servicios": [
+    {"titulo": "Corte de vidrio a la medida", "descripcion": "Vidrio claro, espejos y divisiones cortados al tamaño que necesitas.", "icono": "🪟"},
+    {"titulo": "Trabajos de herrería", "descripcion": "Puertas, portones, balcones y estructuras metálicas fabricadas a la medida.", "icono": "⚒️"},
+    {"titulo": "Venta de láminas y perfiles", "descripcion": "Láminas para techo, tubos y ángulos para tus proyectos.", "icono": "🏗️"},
+    {"titulo": "Molduras y marcos", "descripcion": "Molduras para decoración, marcos y acabados.", "icono": "🖼️"},
+    {"titulo": "Ferretería en general", "descripcion": "Herramientas, clavos, tornillos y materiales de construcción.", "icono": "🔧"},
+    {"titulo": "Cotizaciones por WhatsApp", "descripcion": "Escríbenos y te cotizamos rápido, sin salir de tu comunidad.", "icono": "💬"}
+  ]
+}

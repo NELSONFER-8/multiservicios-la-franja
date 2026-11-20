@@ -1,0 +1,55 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: es
+media_folder: "img/uploads"
+public_folder: "/img/uploads"
+
+collections:
+  - name: "datos"
+    label: "Contenido del sitio"
+    files:
+      - name: "catalogo"
+        label: "Catálogo de productos"
+        file: "data/catalogo.json"
+        format: "json"
+        fields:
+          - label: "Categorías"
+            name: "categorias"
+            widget: "list"
+            summary: "{{fields.nombre}}"
+            fields:
+              - label: "Nombre de la categoría"
+                name: "nombre"
+                widget: "select"
+                options: ["FERRETERÍA GENERAL", "VIDRIERÍA", "HERRERÍA", "LÁMINAS Y PERFILES", "MOLDURA"]
+              - label: "Subcategorías"
+                name: "subcategorias"
+                widget: "list"
+                summary: "{{fields.nombre}}"
+                fields:
+                  - { label: "Nombre de la subcategoría", name: "nombre", widget: "string" }
+                  - label: "Productos"
+                    name: "productos"
+                    widget: "list"
+                    summary: "{{fields.nombre}} - Q{{fields.precio}}"
+                    fields:
+                      - { label: "Nombre", name: "nombre", widget: "string" }
+                      - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
+                      - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
+                      - { label: "Unidad (metro, unidad, m²...)", name: "unidad", widget: "string" }
+                      - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
+      - name: "servicios"
+        label: "Servicios"
+        file: "data/servicios.json"
+        format: "json"
+        fields:
+          - label: "Servicios"
+            name: "servicios"
+            widget: "list"
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
+              - { label: "Icono (emoji)", name: "icono", widget: "string", required: false }
