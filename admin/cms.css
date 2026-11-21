@@ -1,62 +1,226 @@
-/* Panel de administración - tema MULTISERVICIOS LA FRANJA.
-   La paleta se declara una sola vez y se reutiliza en todo el panel. */
+/* Panel de administración - interfaz limpia de MULTISERVICIOS LA FRANJA.
+   Paleta única: se declara aquí y se reutiliza en todo el panel. */
 html:root {
   --lf-primary: #0f766e;
+  --lf-primary-dark: #0b5c56;
   --lf-accent: #f59e0b;
-  --lf-ink: #1e293b;
+  --lf-ink: #17233b;
   --lf-muted: #64748b;
   --lf-surface: #ffffff;
-  --lf-canvas: #f4f7fb;
-  --lf-line: #e2e8f0;
-  --lf-sidebar: #0a1020;
-  --lf-radius: 10px;
+  --lf-canvas: #f5f8fb;
+  --lf-line: #e3e9f0;
+  --lf-soft: #e8f5f2;
+  --lf-hover: #f1f5f9;
+  --lf-radius: 12px;
 
   /* Variables de tema que consume Decap CMS */
   --primary-color: var(--lf-primary);
   --accent-color: var(--lf-accent);
-  --button-color: #0f1d38;
+  --button-color: var(--lf-primary);
   --button-text-color: #ffffff;
   --text-color: var(--lf-ink);
   --secondary-text-color: var(--lf-muted);
   --background-color: var(--lf-canvas);
-  --sidebar-color: var(--lf-sidebar);
-  --sidebar-text-color: #e8eef9;
+  --sidebar-color: var(--lf-surface);
+  --sidebar-text-color: #475569;
   --card-color: var(--lf-surface);
   --border-color: var(--lf-line);
   --error-color: #dc2626;
 }
 
+/* Base tipográfica y superficie de trabajo. */
 html body {
   font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
   background: var(--lf-canvas);
+  color: var(--lf-ink);
 }
 
-html body button,
-html body [role="button"] { border-radius: var(--lf-radius); }
+html body ::selection {
+  background: var(--lf-soft);
+  color: var(--lf-ink);
+}
 
-html body input,
-html body textarea,
-html body select { font-family: inherit; }
+/* Barra lateral: marca, sección y navegación con estado claro. */
+html body [class*="SidebarContainer"] {
+  background: var(--lf-surface);
+  border-right: 1px solid var(--lf-line);
+  color: var(--lf-muted);
+}
 
-/* Listas y tarjetas del editor: más aire y mejor jerarquía visual. */
-html body [class*="SidebarNavList"] { gap: 4px; }
-html body [class*="SidebarNavLink"] { min-height: 38px; border-radius: 8px; line-height: 1.4; }
-html body [class*="ControlContainer"] { padding: 14px 16px; }
+html body [class*="SidebarContainer"]::before {
+  content: "LA FRANJA\A Panel de administración";
+  white-space: pre-line;
+  display: block;
+  padding: 22px 20px 14px;
+  border-bottom: 1px solid var(--lf-line);
+  color: var(--lf-primary);
+  font-size: .95rem;
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: .14em;
+}
+
+html body [class*="SidebarHeading"] {
+  margin: 14px 20px 8px;
+  color: var(--lf-muted);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+html body [class*="SidebarNavList"] {
+  gap: 4px;
+  padding: 0 10px 12px;
+}
+
+html body [class*="SidebarNavLink"] {
+  min-height: 42px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: var(--lf-muted);
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+html body a[class*="SidebarNavLink"]:hover {
+  background: var(--lf-hover);
+  color: var(--lf-ink);
+}
+
+html body a[class*="SidebarNavLink"][aria-current="page"],
+html body a[class*="SidebarNavLink"].sidebar-active {
+  background: var(--lf-soft);
+  color: var(--lf-primary);
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--lf-primary);
+}
+
+/* Cabecera superior: acción sin ruido visual. */
+html body [class*="AppHeader"] {
+  background: var(--lf-surface);
+  border-bottom: 1px solid var(--lf-line);
+}
+
+html body [class*="AppHeaderContent"] {
+  min-height: 64px;
+}
+
+html body [class*="AppHeaderNavLink"] {
+  border-radius: 9px;
+  color: var(--lf-muted);
+  font-weight: 500;
+}
+
+html body [class*="AppMainContainer"] {
+  background: var(--lf-canvas);
+}
+
+/* Tarjetas del panel: jerarquía y espacio para leer. */
+html body [class*="CollectionTopContainer"],
+html body [class*="ListCard"] {
+  background: var(--lf-surface);
+  border: 1px solid var(--lf-line);
+  border-radius: var(--lf-radius);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+
+html body [class*="CollectionTopContainer"] {
+  padding: 20px 22px;
+}
+
+html body [class*="CollectionTopHeading"] {
+  color: var(--lf-ink);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+html body [class*="CollectionTopDescription"] {
+  margin-top: 6px;
+  color: var(--lf-muted);
+  line-height: 1.55;
+}
+
+html body [class*="ListCardLink"] {
+  padding: 18px;
+  color: var(--lf-ink);
+}
+
+html body [class*="ListCardTitle"] {
+  font-weight: 700;
+}
+
+/* Formularios y listas editables: más aire, sin estilos recargados. */
+html body [class*="ControlContainer"] {
+  padding: 14px 16px;
+}
+
 html body [class*="ControlHint"] {
   margin-top: 6px;
   color: var(--lf-muted);
   font-size: .86rem;
   line-height: 1.5;
 }
+
 html body [class*="listControlItem"] {
   margin-bottom: 12px;
   border: 1px solid var(--lf-line);
-  border-radius: 12px;
+  border-radius: var(--lf-radius);
   background: var(--lf-surface);
   overflow: hidden;
 }
+
 html body [class*="StyledListItemTopBar"] {
   padding: 10px 14px;
   border-bottom: 1px solid var(--lf-line);
+  background: var(--lf-canvas);
   font-weight: 600;
+}
+
+html body button,
+html body [role="button"] {
+  border-radius: 9px;
+  font-weight: 600;
+}
+
+html body input,
+html body textarea,
+html body select {
+  font-family: inherit;
+}
+
+html body input:focus-visible,
+html body textarea:focus-visible,
+html body [role="combobox"]:focus-visible {
+  outline: 2px solid var(--lf-primary);
+  outline-offset: 1px;
+}
+
+/* Acceso: misma identidad que el panel. */
+html body [class*="StyledAuthenticationPage"] {
+  background: var(--lf-canvas);
+}
+
+html body [class*="StyledAuthenticationPage"]::before {
+  content: "LA FRANJA\A Panel de administración";
+  white-space: pre-line;
+  display: block;
+  margin-bottom: 20px;
+  color: var(--lf-primary);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: .12em;
+  text-align: center;
+}
+
+html body [class*="LoginButton"] {
+  background: var(--lf-primary);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+html body [class*="LoginButton"]:hover {
+  background: var(--lf-primary-dark);
 }
