@@ -106,9 +106,9 @@ collections:
               - label: "Tarjetas de 'Por qué elegirnos'"
                 name: "ventajas"
                 widget: "list"
-                summary: "{{fields.icono}} {{fields.titulo}}"
+                summary: "{{fields.titulo}}"
                 fields:
-                  - { label: "Icono (emoji)", name: "icono", widget: "string" }
+                  - { label: "Imagen de la tarjeta", name: "imagen", widget: "image", required: false, hint: "Sube una foto real. Si la dejas vacía, la tarjeta se muestra solo con texto." }
                   - { label: "Título", name: "titulo", widget: "string" }
                   - { label: "Texto", name: "texto", widget: "text" }
               - { label: "Texto del botón 'Ver productos'", name: "botonProductos", widget: "string" }
@@ -131,6 +131,17 @@ collections:
               - { label: "Título: palabra destacada", name: "titulo2", widget: "string" }
               - { label: "Texto de presentación", name: "intro", widget: "string" }
               - { label: "Mensaje cuando no hay servicios", name: "vacio", widget: "string" }
+              - { label: "Texto del botón 'Ver trabajos'", name: "verTrabajos", widget: "string" }
+          - label: "Trabajos realizados"
+            name: "trabajos"
+            widget: "object"
+            fields:
+              - { label: "Título: primera parte", name: "titulo1", widget: "string" }
+              - { label: "Título: palabra destacada", name: "titulo2", widget: "string" }
+              - { label: "Texto de presentación", name: "intro", widget: "text" }
+              - { label: "Mensaje cuando no hay trabajos", name: "vacio", widget: "string" }
+              - { label: "Texto del enlace para volver", name: "volver", widget: "string" }
+              - { label: "Texto del botón de cotización", name: "boton", widget: "string" }
           - label: "Nosotros"
             name: "nosotros"
             widget: "object"
@@ -142,9 +153,9 @@ collections:
               - label: "Tarjetas de valores"
                 name: "valores"
                 widget: "list"
-                summary: "{{fields.icono}} {{fields.titulo}}"
+                summary: "{{fields.titulo}}"
                 fields:
-                  - { label: "Icono (emoji)", name: "icono", widget: "string" }
+                  - { label: "Imagen de la tarjeta", name: "imagen", widget: "image", required: false, hint: "Sube una foto real. Si la dejas vacía, la tarjeta se muestra solo con texto." }
                   - { label: "Título", name: "titulo", widget: "string" }
                   - { label: "Texto", name: "texto", widget: "text" }
           - label: "Contacto"
@@ -188,6 +199,7 @@ collections:
     identifier_field: "nombre"
     fields:
       - { label: "Nombre de la categoría", name: "nombre", widget: "string", hint: "Ej. FERRETERÍA GENERAL. Escribe siempre el mismo nombre para agrupar productos." }
+      - { label: "Imagen de la categoría", name: "imagen", widget: "image", required: false, hint: "Se muestra en la tarjeta de la categoría en el Inicio. Si la dejas vacía, la tarjeta se muestra solo con texto." }
 
   - name: "subcategorias"
     label: "2. Subcategorías"
@@ -266,5 +278,37 @@ collections:
             summary: "{{fields.titulo}}"
             fields:
               - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Identificador (slug)", name: "slug", widget: "string", hint: "Ej. vidrieria, herreria, laminas. Se usa para abrir los trabajos de ese servicio." }
               - { label: "Descripción", name: "descripcion", widget: "text" }
-              - { label: "Icono (emoji)", name: "icono", widget: "string", required: false }
+              - { label: "Imagen de la tarjeta", name: "imagen", widget: "image", required: false, hint: "Sube una foto real del servicio. No uses iconos: las fotos dan más seriedad." }
+              - { label: "Mostrar botón 'Ver trabajos realizados'", name: "verTrabajos", widget: "boolean", default: false, hint: "Actívalo en Vidriería y Herrería para abrir su galería de fotos." }
+
+  - name: "trabajos"
+    label: "5. Trabajos realizados"
+    label_singular: "trabajo"
+    description: "Sube fotos de trabajos terminados con su descripción. Se muestran al hacer clic en Vidriería o Herrería."
+    icon: "photo_library"
+    files:
+      - name: "trabajos"
+        label: "Editar galería de trabajos"
+        file: "data/trabajos.json"
+        format: "json"
+        fields:
+          - label: "Trabajos"
+            name: "trabajos"
+            widget: "list"
+            summary: "{{fields.titulo}} — {{fields.servicio}}"
+            hint: "Agrega una entrada por cada trabajo. Sube la foto y escribe una descripción."
+            fields:
+              - { label: "Título del trabajo", name: "titulo", widget: "string", hint: "Ej. Ventana de aluminio en zona 5" }
+              - label: "Servicio"
+                name: "servicio"
+                widget: "select"
+                options:
+                  - { label: "Vidriería", value: "vidrieria" }
+                  - { label: "Herrería", value: "herreria" }
+                  - { label: "Láminas y perfiles", value: "laminas" }
+                  - { label: "Moldura", value: "moldura" }
+                  - { label: "Ferretería general", value: "ferreteria" }
+              - { label: "Descripción", name: "descripcion", widget: "text", hint: "Cuenta qué se hizo, el material usado y el resultado." }
+              - { label: "Foto del trabajo", name: "imagen", widget: "image", hint: "Se mostrará en la galería del servicio elegido." }
