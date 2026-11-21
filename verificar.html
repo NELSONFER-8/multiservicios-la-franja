@@ -28,7 +28,7 @@
 <body>
   <div class="wrap">
     <h1>🔍 Verificación del sitio</h1>
-    <p class="sub">Esta página revisa que los archivos nuevos estén realmente publicados. Ábrela en el mismo sitio donde ves la tienda (por ejemplo <code> Tusitio.netlify.app/verificar.html</code>).</p>
+    <p class="sub">Esta página revisa que los archivos nuevos estén realmente publicados. Ábrela en el mismo sitio donde ves la tienda (por ejemplo <code> lafranja.pages.dev/verificar.html</code>).</p>
     <div id="resultados"><div class="card"><span class="icon">⏳</span><div><strong>Cargando comprobaciones…</strong><small>Espera unos segundos.</small></div></div></div>
     <div class="resumen" id="resumen">Revisando…</div>
     <button type="button" onclick="location.reload()">Volver a revisar</button>
@@ -75,7 +75,7 @@
       if (location.protocol === "file:") {
         box.innerHTML = '<div class="card bad"><span class="icon">⚠️</span><div><strong>Estás abriendo el archivo desde tu computadora</strong>' +
           '<small>El navegador bloquea la lectura de archivos en modo local, por eso las comprobaciones no funcionan. ' +
-          'Abre esta misma página desde tu sitio publicado: https://TU-SITIO.netlify.app/verificar.html</small></div></div>';
+          'Abre esta misma página desde tu sitio publicado: https://lafranja.pages.dev/verificar.html</small></div></div>';
         resumen.textContent = "Modo local: abre la página desde el sitio publicado para verificar.";
         return;
       }
@@ -110,7 +110,8 @@
         return check("Panel de administración (admin/config.yml)", function () {
           return getText("admin/config.yml").then(function (t) {
             if (t.indexOf("Colores del sitio") === -1 || t.indexOf("Logotipo") === -1) throw new Error("Es la versión anterior del archivo.");
-            return "Incluye logotipo, colores y categorías libres.";
+            if (t.indexOf("5. Trabajos realizados") === -1 || t.indexOf('name: "imagen", widget: "image"') === -1) throw new Error("Faltan las imágenes o la galería de trabajos.");
+            return "Incluye logotipo, colores, categorías, imágenes y trabajos.";
           });
         });
       }).then(function () {
@@ -125,7 +126,7 @@
           return getText("data/site.json").then(function (t) {
             var d = JSON.parse(t);
             if (!d.colores || !("logo" in d)) throw new Error("Es la versión anterior del archivo.");
-            return "Colores: " + Object.keys(d.colores).length + " configurables. Logo: " + (d.logo ? d.logo : "sin subir (muestra el emoji)") + ".";
+            return "Colores: " + Object.keys(d.colores).length + " configurables. Logo: " + (d.logo ? d.logo : "sin subir (muestra las iniciales LF)") + ".";
           });
         });
       }).then(function () {
@@ -149,6 +150,26 @@
             }
             if (!nombres.length) throw new Error("El catálogo está vacío: no hay productos publicados.");
             return cats.length + " categorías, " + nombres.length + " productos. Ejemplos: " + nombres.slice(0, 4).join(", ") + ".";
+          });
+        });
+      }).then(function () {
+        return check("Página de trabajos realizados", function () {
+          return Promise.all([getText("trabajos.html"), getText("js/data-loader.js")]).then(function (res) {
+            if (res[0].indexOf('id="trabajos-lista"') === -1) throw new Error("Falta la galería en trabajos.html.");
+            if (res[1].indexOf("iniciarTrabajos") === -1) throw new Error("Falta el cargador de trabajos.");
+            return "La galería y su cargador están publicados.";
+          });
+        });
+      }).then(function () {
+        return check("Datos de trabajos y servicios", function () {
+          return Promise.all([getText("data/trabajos.json"), getText("data/servicios.json")]).then(function (res) {
+            var t = JSON.parse(res[0]);
+            var s = JSON.parse(res[1]);
+            if (!t.trabajos || !Array.isArray(t.trabajos)) throw new Error("Falta data/trabajos.json con la lista trabajos.");
+            if (!s.servicios || !Array.isArray(s.servicios)) throw new Error("Falta la lista de servicios.");
+            var botones = s.servicios.filter(function (x) { return x.verTrabajos; }).length;
+            if (botones < 2) throw new Error("Vidriería y Herrería deben tener activado 'Ver trabajos'.");
+            return t.trabajos.length + " trabajos publicados, " + botones + " servicios con galería.";
           });
         });
       });
