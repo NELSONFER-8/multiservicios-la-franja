@@ -193,6 +193,18 @@
       "destacado": false,
       "imagen": "/img/uploads/images-1-10946760.jpg",
       "sku": "LO12P0.25"
+    },
+    {
+      "nombre": "TORNILLO PRE PINTADO PUNTA BROCA 2 PLG",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Complementos",
+      "descripcion": "Tornillo polzer punta broca 1/4 x 2 prepintado",
+      "precio": 1,
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
+      "imagen": "/img/uploads/gemini-generated-image-x01gxrx01gxrx01g-bc012cf5.jpg",
+      "sku": "TPB14X2"
     }
   ]
 }
