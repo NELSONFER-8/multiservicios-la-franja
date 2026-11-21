@@ -15,27 +15,6 @@
       "verTrabajos": true
     },
     {
-      "titulo": "Venta de láminas y perfiles",
-      "slug": "laminas",
-      "descripcion": "Láminas para techo, tubos y ángulos para tus proyectos.",
-      "imagen": "",
-      "verTrabajos": false
-    },
-    {
-      "titulo": "Molduras y marcos",
-      "slug": "moldura",
-      "descripcion": "Molduras para decoración, marcos y acabados.",
-      "imagen": "",
-      "verTrabajos": false
-    },
-    {
-      "titulo": "Ferretería en general",
-      "slug": "ferreteria",
-      "descripcion": "Herramientas, clavos, tornillos y materiales de construcción.",
-      "imagen": "",
-      "verTrabajos": false
-    },
-    {
       "titulo": "Cotizaciones por WhatsApp",
       "slug": "cotizaciones",
       "descripcion": "Escríbenos y te cotizamos rápido, sin salir de tu comunidad.",
