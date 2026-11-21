@@ -7,6 +7,7 @@
   var API = {
     sesion: '/api/panel/sesion',
     datos: '/api/panel/datos',
+    imagen: '/api/panel/imagen',
   };
 
   var UNIDADES = ['unidad', 'bolsa', 'rollo', 'mt2', 'pie'];
@@ -22,7 +23,7 @@
     { name: 'precio', label: 'Precio (Q)', tipo: 'numero', requerido: true },
     { name: 'unidad', label: 'Unidad de venta', tipo: 'opciones', opciones: UNIDADES },
     { name: 'sku', label: 'SKU (opcional)', tipo: 'texto' },
-    { name: 'imagen', label: 'Ruta de imagen', tipo: 'texto', ancho: true, ayuda: 'Ej. /img/uploads/producto.jpg' },
+    { name: 'imagen', label: 'Imagen del producto', tipo: 'imagen', ancho: true, ayuda: 'Sube un archivo, pega un enlace o elige una imagen ya publicada.' },
     { name: 'descripcion', label: 'Descripción corta', tipo: 'area', ancho: true },
     { name: 'activo', label: 'Activo (visible en la web)', tipo: 'check' },
     { name: 'destacado', label: 'Destacado', tipo: 'check' },
@@ -41,7 +42,7 @@
       archivo: 'data/categorias', tipo: 'carpeta', singular: 'categoría',
       campos: [
         { name: 'nombre', label: 'Nombre de la categoría', tipo: 'texto', requerido: true },
-        { name: 'imagen', label: 'Ruta de imagen (opcional)', tipo: 'texto', ancho: true, ayuda: 'Ej. /img/uploads/ferreteria.jpg' },
+        { name: 'imagen', label: 'Imagen de la categoría', tipo: 'imagen', ancho: true, ayuda: 'Sube un archivo, pega un enlace o elige una imagen ya publicada.' },
       ],
     },
     subcategorias: {
@@ -61,7 +62,7 @@
         { name: 'titulo', label: 'Título', tipo: 'texto', requerido: true },
         { name: 'slug', label: 'Identificador (slug)', tipo: 'texto', requerido: true, ayuda: 'Ej. vidrieria, herreria' },
         { name: 'descripcion', label: 'Descripción', tipo: 'area', ancho: true },
-        { name: 'imagen', label: 'Ruta de imagen', tipo: 'texto', ancho: true },
+        { name: 'imagen', label: 'Imagen del servicio', tipo: 'imagen', ancho: true },
         { name: 'verTrabajos', label: 'Mostrar botón «Ver trabajos»', tipo: 'check' },
       ],
     },
@@ -73,7 +74,7 @@
         { name: 'titulo', label: 'Título del trabajo', tipo: 'texto', ancho: true, requerido: true },
         { name: 'servicio', label: 'Servicio', tipo: 'texto', requerido: true, ayuda: 'vidrieria, herreria, laminas…' },
         { name: 'descripcion', label: 'Descripción', tipo: 'area', ancho: true },
-        { name: 'imagen', label: 'Ruta de la foto', tipo: 'texto', ancho: true },
+        { name: 'imagen', label: 'Foto del trabajo', tipo: 'imagen', ancho: true },
       ],
     },
     negocio: {
@@ -109,6 +110,8 @@
     resumenSha: '',
     timerAviso: null,
     timerCajon: null,
+    galeriaCampo: '',
+    galeriaImagenes: [],
   };
 
   function $(id) { return document.getElementById(id); }
@@ -142,7 +145,14 @@
 
   function rutaImagen(registro) {
     var imagen = String(registro && registro.imagen ? registro.imagen : '').trim();
-    return imagen ? '/' + esc(imagen.replace(/^\/+/, '')) : '';
+    if (!imagen) return '';
+    if (/^https?:\/\//i.test(imagen)) return esc(imagen);
+    return '/' + esc(imagen.replace(/^\/+/, ''));
+  }
+
+  function imagenValida(valor) {
+    if (!valor) return true;
+    return /^\/[A-Za-z0-9._\/-]+$/.test(valor) || /^https?:\/\/[^\s"'<>]{1,490}$/i.test(valor);
   }
 
   function miniatura(registro, clase) {
@@ -559,6 +569,24 @@
       return inicio + '<input id="' + id + '" type="checkbox"' + (valor ? ' checked' : '') + '></label>';
     }
 
+    if (campo.tipo === 'imagen') {
+      var vista = valor ? rutaImagen({ imagen: valor }) : '';
+      var ayudaImagen = campo.ayuda ? '<small class="ayuda-campo">' + esc(campo.ayuda) + '</small>' : '';
+      return '<div class="campo ancho">' +
+        '<span>' + esc(campo.label) + '</span>' +
+        '<div class="vista-imagen" id="vista-' + id + '">' +
+        (vista ? '<img src="' + vista + '" alt="Vista previa">' : ICONO_CAJA + '<span>Sin imagen</span>') +
+        '</div>' +
+        '<input id="' + id + '" type="text" value="' + esc(valor || '') + '" placeholder="/img/uploads/foto.jpg o https://…">' +
+        '<div class="botones-imagen">' +
+        '<button type="button" class="boton chico" data-accion="subir-imagen">Subir desde la PC</button>' +
+        '<button type="button" class="boton chico" data-accion="galeria-imagen">Elegir del sitio</button>' +
+        '<input id="' + id + '-archivo" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>' +
+        '</div>' +
+        '<small class="estado-imagen" id="estado-' + id + '" hidden></small>' + ayudaImagen +
+        '</div>';
+    }
+
     var control;
     if (campo.tipo === 'area') {
       control = '<textarea id="' + id + '" rows="3">' + esc(valor || '') + '</textarea>';
@@ -613,6 +641,138 @@
     });
   }
 
+  function estadoImagen(id, mensaje) {
+    var caja = $('estado-' + id);
+    if (!caja) return;
+    caja.textContent = mensaje || '';
+    caja.hidden = !mensaje;
+  }
+
+  function actualizarVistaImagen(id) {
+    var entrada = $(id);
+    var vista = $('vista-' + id);
+    if (!entrada || !vista) return;
+    var valor = entrada.value.trim();
+    vista.innerHTML = valor
+      ? '<img src="' + rutaImagen({ imagen: valor }) + '" alt="Vista previa">'
+      : ICONO_CAJA + '<span>Sin imagen</span>';
+  }
+
+  function fijarImagen(id, ruta) {
+    var entrada = $(id);
+    if (!entrada) return;
+    entrada.value = ruta;
+    actualizarVistaImagen(id);
+    marcarSucio();
+  }
+
+  function leerArchivoImagen(archivo) {
+    return new Promise(function (resolve, reject) {
+      var lector = new FileReader();
+      lector.onload = function () { resolve(String(lector.result)); };
+      lector.onerror = function () { reject(new Error('No se pudo leer el archivo.')); };
+      lector.readAsDataURL(archivo);
+    });
+  }
+
+  function subirImagenDesdePC(archivo, id) {
+    if (!archivo) return;
+    var extension = archivo.name.split('.').pop().toLowerCase();
+    if (['png', 'jpg', 'jpeg', 'webp', 'gif'].indexOf(extension) === -1) {
+      aviso('Formato no permitido. Usa JPG, PNG, WEBP o GIF.', 'bad');
+      return;
+    }
+    if (archivo.size > 5 * 1024 * 1024) {
+      aviso('La imagen supera los 5 MB.', 'bad');
+      return;
+    }
+    estadoImagen(id, 'Subiendo imagen…');
+    leerArchivoImagen(archivo)
+      .then(function (contenido) {
+        return fetch(API.imagen, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ nombre: archivo.name, contenido: contenido }),
+        });
+      })
+      .then(function (respuesta) {
+        return respuesta.json().then(function (datos) {
+          if (!respuesta.ok) throw new Error(datos.error || 'No se pudo subir la imagen.');
+          return datos;
+        });
+      })
+      .then(function (datos) {
+        estadoImagen(id, '');
+        fijarImagen(id, datos.ruta);
+        aviso('Imagen subida: ' + datos.nombre, 'ok');
+      })
+      .catch(function (error) {
+        estadoImagen(id, '');
+        aviso(error.message, 'bad');
+      });
+  }
+
+  function dibujarGaleria() {
+    if (!$('galeria-grid')) return;
+    var texto = $('buscar-galeria').value.trim().toLowerCase();
+    var lista = estado.galeriaImagenes.filter(function (imagen) {
+      return imagen.nombre.toLowerCase().indexOf(texto) !== -1;
+    });
+    if (!lista.length) {
+      $('galeria-grid').innerHTML = '<p class="galeria-vacio">' +
+        (texto ? 'No hay imágenes con ese nombre.' : 'Todavía no hay imágenes publicadas.') + '</p>';
+      return;
+    }
+    $('galeria-grid').innerHTML = lista.map(function (imagen) {
+      return '<button type="button" class="miniatura-opcion" data-ruta="' + esc(imagen.ruta) +
+        '" title="' + esc(imagen.nombre) + '">' +
+        '<img src="' + esc(imagen.url) + '" alt="" loading="lazy"><span>' + esc(imagen.nombre) + '</span></button>';
+    }).join('');
+  }
+
+  function abrirGaleria(id) {
+    estado.galeriaCampo = id;
+    $('buscar-galeria').value = '';
+    $('galeria-grid').innerHTML = '<p class="galeria-vacio">Cargando imágenes…</p>';
+    $('telon').hidden = false;
+    $('galeria').hidden = false;
+    requestAnimationFrame(function () {
+      $('telon').classList.add('abierto');
+      $('galeria').classList.add('abierto');
+      $('buscar-galeria').focus();
+    });
+    fetch(API.imagen, { cache: 'no-store' })
+      .then(function (respuesta) {
+        return respuesta.json().then(function (datos) {
+          if (!respuesta.ok) throw new Error(datos.error || 'No se pudo cargar la galería.');
+          return datos;
+        });
+      })
+      .then(function (datos) {
+        estado.galeriaImagenes = datos.imagenes || [];
+        $('galeria-nota').textContent = estado.galeriaImagenes.length +
+          (estado.galeriaImagenes.length === 1 ? ' imagen publicada' : ' imágenes publicadas') +
+          ' en img/uploads.';
+        dibujarGaleria();
+      })
+      .catch(function (error) {
+        $('galeria-grid').innerHTML = '<p class="galeria-vacio">' + esc(error.message) + '</p>';
+      });
+  }
+
+  function cerrarGaleria() {
+    if ($('galeria').hidden) return;
+    $('galeria').classList.remove('abierto');
+    setTimeout(function () {
+      $('galeria').hidden = true;
+      estado.galeriaCampo = '';
+      if ($('cajon').hidden) {
+        $('telon').classList.remove('abierto');
+        $('telon').hidden = true;
+      }
+    }, 220);
+  }
+
   function leerFicha() {
     var cfg = SECCIONES[estado.vista];
     var registro = {};
@@ -632,12 +792,13 @@
       }
     });
 
+    if (registro.imagen && !imagenValida(registro.imagen)) {
+      throw new Error('La imagen debe ser una ruta del sitio o un enlace http(s).');
+    }
+
     if (cfg.tipo === 'productos') {
       if (!isFinite(registro.precio) || registro.precio < 0) throw new Error('El precio debe ser un número positivo.');
       if (UNIDADES.indexOf(registro.unidad) === -1) throw new Error('La unidad no es válida.');
-      if (registro.imagen && !/^\/[A-Za-z0-9._\/-]+$/.test(registro.imagen)) {
-        throw new Error('La imagen debe empezar por / y usar una ruta válida.');
-      }
       if (!registro.sku) delete registro.sku;
     }
     return registro;
@@ -679,8 +840,8 @@
     $('telon').classList.remove('abierto');
     $('cajon').classList.remove('abierto');
     estado.timerCajon = setTimeout(function () {
-      $('telon').hidden = true;
       $('cajon').hidden = true;
+      if ($('galeria').hidden) $('telon').hidden = true;
       estado.timerCajon = null;
     }, 240);
   }
@@ -807,7 +968,50 @@
     $('cancelar-ficha').addEventListener('click', cerrarFicha);
     $('eliminar-registro').addEventListener('click', eliminarFicha);
     $('cerrar-cajon').addEventListener('click', cerrarFicha);
-    $('telon').addEventListener('click', cerrarFicha);
+    $('telon').addEventListener('click', function () {
+      if (!$('galeria').hidden) cerrarGaleria();
+      else cerrarFicha();
+    });
+    $('cerrar-galeria').addEventListener('click', cerrarGaleria);
+    $('buscar-galeria').addEventListener('input', dibujarGaleria);
+    $('galeria-grid').addEventListener('click', function (evento) {
+      var boton = evento.target.closest('.miniatura-opcion[data-ruta]');
+      if (!boton) return;
+      var campo = estado.galeriaCampo;
+      cerrarGaleria();
+      fijarImagen(campo, boton.getAttribute('data-ruta'));
+      aviso('Imagen seleccionada. Recuerda guardar.', 'ok');
+    });
+
+    $('cajon-cuerpo').addEventListener('click', function (evento) {
+      var boton = evento.target.closest('[data-accion]');
+      if (!boton) return;
+      evento.preventDefault();
+      evento.stopPropagation();
+      var campo = boton.closest('.campo');
+      if (!campo) return;
+      var entrada = campo.querySelector('input[type="text"]');
+      if (!entrada) return;
+      if (boton.getAttribute('data-accion') === 'subir-imagen') {
+        var archivo = campo.querySelector('input[type="file"]');
+        if (archivo) archivo.click();
+      } else if (boton.getAttribute('data-accion') === 'galeria-imagen') {
+        abrirGaleria(entrada.id);
+      }
+    });
+
+    $('cajon-cuerpo').addEventListener('change', function (evento) {
+      if (!evento.target.matches('input[type="file"]')) return;
+      var id = evento.target.id.replace(/-archivo$/, '');
+      var archivo = evento.target.files && evento.target.files[0];
+      evento.target.value = '';
+      subirImagenDesdePC(archivo, id);
+    });
+
+    $('cajon-cuerpo').addEventListener('input', function (evento) {
+      if (evento.target.type !== 'text' || !/^f-/.test(evento.target.id)) return;
+      if ($('vista-' + evento.target.id)) actualizarVistaImagen(evento.target.id);
+    });
 
     $('buscar').addEventListener('input', dibujar);
     $('filtro-categoria').addEventListener('change', dibujar);
@@ -863,7 +1067,9 @@
     });
 
     document.addEventListener('keydown', function (evento) {
-      if (evento.key === 'Escape' && !$('cajon').hidden) cerrarFicha();
+      if (evento.key !== 'Escape') return;
+      if (!$('galeria').hidden) cerrarGaleria();
+      else if (!$('cajon').hidden) cerrarFicha();
     });
 
     var parametros = new URLSearchParams(window.location.search);
