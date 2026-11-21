@@ -1,36 +1,36 @@
 {
   "inicio": {
     "eyebrow": "Raxruhá · Alta Verapaz",
+    "categoriasTitulo1": "Nuestras",
+    "categoriasTitulo2": "categorías",
+    "categoriasIntro": "Elige una categoría para ver el catálogo.",
     "porQueTitulo1": "¿Por qué",
     "porQueTitulo2": "elegirnos?",
-    "categoriasIntro": "Elige una categoría para ver el catálogo.",
-    "botonProductos": "Ver productos",
     "ventajas": [
       {
-        "icono": "📍",
+        "imagen": "",
         "titulo": "Cerca de ti",
         "texto": "Estamos en Aldea San Antonio Las Cuevas, Raxruhá."
       },
       {
-        "icono": "🛡️",
+        "imagen": "",
         "titulo": "Materiales de calidad",
         "texto": "Productos confiables para obras grandes y pequeñas."
       },
       {
-        "icono": "📐",
+        "imagen": "",
         "titulo": "Trabajos a la medida",
         "texto": "Vidrio y herrería hechos según lo que necesitas."
       }
     ],
-    "verCategoria": "Ver productos →",
+    "botonProductos": "Ver productos",
     "botonContacto": "Contáctanos",
-    "categoriasTitulo1": "Nuestras",
-    "categoriasTitulo2": "categorías"
+    "verCategoria": "Ver productos →"
   },
   "productos": {
     "titulo1": "Nuestro",
     "titulo2": "catálogo",
-    "intro": "Para confirmar existencias o pedir cotización, escríbenos por WhatsApp.",
+    "intro": "Precios en Quetzales. Para confirmar existencias o pedir cotización, escríbenos por WhatsApp.",
     "buscador": "Buscar producto…",
     "vacio": "No se encontraron productos."
   },
@@ -38,7 +38,16 @@
     "titulo1": "Nuestros",
     "titulo2": "servicios",
     "intro": "Soluciones para tu casa, negocio u obra.",
-    "vacio": "Pronto publicaremos nuestros servicios."
+    "vacio": "Pronto publicaremos nuestros servicios.",
+    "verTrabajos": "Ver trabajos realizados"
+  },
+  "trabajos": {
+    "titulo1": "Trabajos",
+    "titulo2": "realizados",
+    "intro": "Una muestra de los trabajos que hemos realizado para nuestros clientes.",
+    "vacio": "Aún no hay trabajos publicados en esta sección. Pronto agregaremos fotos.",
+    "volver": "← Volver a servicios",
+    "boton": "Solicitar cotización"
   },
   "nosotros": {
     "titulo1": "Sobre",
@@ -47,17 +56,17 @@
     "compromisoTitulo": "Nuestro compromiso",
     "valores": [
       {
-        "icono": "🤝",
+        "imagen": "",
         "titulo": "Trato cercano",
         "texto": "Te asesoramos para que compres lo que realmente necesitas."
       },
       {
-        "icono": "🧰",
+        "imagen": "",
         "titulo": "Variedad",
-        "texto": "Productos y servicios en un solo lugar"
+        "texto": "Cinco líneas de productos y servicios en un solo lugar."
       },
       {
-        "icono": "⭐",
+        "imagen": "",
         "titulo": "Confianza",
         "texto": "Trabajamos con responsabilidad y cumplimiento."
       }
