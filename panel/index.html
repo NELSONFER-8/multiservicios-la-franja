@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0a1020">
+  <title>Panel | LA FRANJA</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="pantalla" id="cargando">
+    <div class="centro-carga">
+      <div class="sello">LF</div>
+      <div class="girador" aria-hidden="true"></div>
+      <p>Preparando el panel…</p>
+    </div>
+  </div>
+
+  <section class="acceso" id="acceso" hidden>
+    <div class="acceso-tarjeta">
+      <div class="sello">LF</div>
+      <p class="eyebrow">LA FRANJA · ADMINISTRACIÓN</p>
+      <h1>Tu catálogo, en orden.</h1>
+      <p class="acceso-texto">Entra con tu cuenta de GitHub para gestionar productos, categorías y textos del sitio. Sin contraseñas nuevas ni datos duplicados.</p>
+      <button class="boton principal" id="entrar" type="button">Entrar con GitHub <span aria-hidden="true">→</span></button>
+      <p class="error-acceso" id="error-acceso" hidden></p>
+      <div class="acceso-pie">
+        <a href="/admin/">Panel clásico</a>
+        <a href="/">Ver la tienda</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="estructura" id="estructura" hidden>
+    <aside class="lateral">
+      <div class="marca">
+        <div class="sello pequeno">LF</div>
+        <div>
+          <strong>LA FRANJA</strong>
+          <small>Panel administrativo</small>
+        </div>
+      </div>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <p class="menu-titulo">CATÁLOGO</p>
+        <button class="menu-item activo" type="button" data-vista="productos">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v13H4zM8 7V4h8v3M4 12h16"/></svg>
+          <span>Productos</span><span class="contador" id="contador-menu">0</span>
+        </button>
+        <button class="menu-item" type="button" data-vista="categorias">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h7l2 2h9v14H3z"/></svg>
+          <span>Categorías</span>
+        </button>
+        <button class="menu-item" type="button" data-vista="subcategorias">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg>
+          <span>Subcategorías</span>
+        </button>
+
+        <p class="menu-titulo">CONTENIDO</p>
+        <button class="menu-item" type="button" data-vista="servicios">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M6 6l12 12M18 6 6 18"/></svg>
+          <span>Servicios</span>
+        </button>
+        <button class="menu-item" type="button" data-vista="trabajos">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="m4 18 5-4 4 3 3-2 4 3"/></svg>
+          <span>Trabajos</span>
+        </button>
+        <button class="menu-item" type="button" data-vista="negocio">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16v11H4zM3 9l2-5h14l2 5M9 20v-6h6v6"/></svg>
+          <span>Datos del negocio</span>
+        </button>
+        <button class="menu-item" type="button" data-vista="paginas">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18l-7-4-7 4zM8 8h8M8 12h6"/></svg>
+          <span>Textos de páginas</span>
+        </button>
+
+        <p class="menu-titulo">PANORAMA</p>
+        <button class="menu-item" type="button" data-vista="resumen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10m6 10V4m6 16v-7m4 7H2"/></svg>
+          <span>Resumen</span>
+        </button>
+      </nav>
+
+      <div class="lateral-pie">
+        <a class="menu-item" href="/admin/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></svg>
+          <span>Panel clásico</span>
+        </a>
+        <a class="menu-item" href="/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>
+          <span>Ver la tienda</span>
+        </a>
+        <button class="menu-item" id="salir" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5m4-4 4-4-4-4m4 4H9"/></svg>
+          <span>Cerrar sesión</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="principal">
+      <header class="barra">
+        <div>
+          <p class="eyebrow" id="seccion">CATÁLOGO</p>
+          <h2 id="titulo">Productos</h2>
+          <p class="bajada" id="bajada">Todo lo que está publicado en la tienda.</p>
+        </div>
+        <div class="barra-derecha">
+          <span class="etiqueta-fase" id="etiqueta-fase">Edición habilitada</span>
+          <div class="usuario">
+            <span class="avatar" id="avatar">A</span>
+            <span id="nombre-usuario">Administrador</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="contenido">
+        <section id="vista-datos">
+          <div class="tarjetas" id="tarjetas" hidden></div>
+
+          <div class="herramientas">
+            <label class="buscador" id="env-buscador">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+              <input id="buscar" type="search" autocomplete="off" placeholder="Buscar…" aria-label="Buscar">
+            </label>
+            <select id="filtro-categoria" aria-label="Filtrar por categoría" hidden><option value="">Todas las categorías</option></select>
+            <select id="filtro-estado" aria-label="Filtrar por estado" hidden>
+              <option value="">Todos los estados</option>
+              <option value="activo">Activos</option>
+              <option value="inactivo">Inactivos</option>
+              <option value="destacado">Destacados</option>
+            </select>
+            <button class="boton" id="actualizar" type="button">Actualizar</button>
+            <button class="boton principal" id="agregar" type="button">+ Agregar producto</button>
+          </div>
+
+          <div class="barra-acciones" id="barra-acciones" hidden>
+            <span id="texto-cambios">Tienes cambios sin guardar.</span>
+            <span class="acciones-derecha">
+              <button class="boton" id="descartar" type="button">Descartar</button>
+              <button class="boton principal" id="guardar" type="button">Guardar cambios</button>
+            </span>
+          </div>
+
+          <div class="tabla-contenedor" id="tabla-contenedor">
+            <table class="tabla">
+              <thead><tr id="cabecera-tabla"></tr></thead>
+              <tbody id="filas"></tbody>
+            </table>
+          </div>
+
+          <div class="editor-json" id="editor-json" hidden>
+            <p class="aviso-edicion">Edita el JSON y pulsa <b>Guardar cambios</b>. Se valida antes de publicar.</p>
+            <textarea id="json-texto" spellcheck="false" aria-label="Contenido JSON"></textarea>
+          </div>
+
+          <p class="vacio" id="vacio" hidden></p>
+          <p class="pie-tabla" id="pie-tabla"></p>
+        </section>
+
+        <section id="vista-resumen" hidden>
+          <div class="tarjetas" id="tarjetas-resumen"></div>
+          <div class="bloques-resumen">
+            <div class="bloque">
+              <h3>Por categoría</h3>
+              <div id="desglose-categorias"></div>
+            </div>
+            <div class="bloque">
+              <h3>Estado del catálogo</h3>
+              <dl class="detalles" id="detalles-catalogo"></dl>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="aviso-flotante" id="aviso" hidden></div>
+  <div class="telon" id="telon" hidden></div>
+
+  <aside class="cajon" id="cajon" hidden role="dialog" aria-modal="true" aria-label="Editar registro">
+    <div class="cajon-cabecera">
+      <div>
+        <p class="eyebrow" id="cajon-eyebrow">NUEVO PRODUCTO</p>
+        <h3 id="cajon-titulo">Producto</h3>
+      </div>
+      <button class="cerrar" id="cerrar-cajon" type="button" aria-label="Cerrar">×</button>
+    </div>
+    <div class="cajon-cuerpo" id="cajon-cuerpo"></div>
+    <div class="cajon-pie">
+      <button class="boton peligro" id="eliminar-registro" type="button">Eliminar</button>
+      <span class="acciones-derecha">
+        <button class="boton" id="cancelar-ficha" type="button">Cancelar</button>
+        <button class="boton principal" id="guardar-ficha" type="button">Guardar</button>
+      </span>
+    </div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>
