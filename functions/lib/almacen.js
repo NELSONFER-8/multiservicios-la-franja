@@ -57,8 +57,9 @@ export function validarProducto(producto) {
   };
   if (!isFinite(limpio.precio) || limpio.precio < 0) throw new Error('El precio debe ser un número positivo.');
   if (!UNIDADES.has(limpio.unidad)) throw new Error('La unidad no es válida.');
-  if (limpio.imagen && !/^\/[A-Za-z0-9._\/-]+$/.test(limpio.imagen)) {
-    throw new Error('La ruta de la imagen no es válida.');
+  if (limpio.imagen && !/^\/[A-Za-z0-9._\/-]+$/.test(limpio.imagen) &&
+      !/^https?:\/\/[^\s"'<>]{1,490}$/i.test(limpio.imagen)) {
+    throw new Error('La imagen debe ser una ruta del sitio o un enlace http(s).');
   }
   if (producto.sku != null && String(producto.sku).trim()) {
     limpio.sku = texto(producto.sku, 80, false);
