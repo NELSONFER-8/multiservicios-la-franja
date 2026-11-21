@@ -144,6 +144,18 @@
       "destacado": false,
       "imagen": "/img/uploads/metalum-f24ea4f4.webp",
       "sku": "LOM0.2510"
+    },
+    {
+      "nombre": "LAMINA ONDULADA METALUM 10FT",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "descripcion": "Lamina ondulada cal.28 0.25mm ancho util 75cm",
+      "precio": 95,
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
+      "imagen": "/img/uploads/metalum-f24ea4f4.webp",
+      "sku": "LOM0.2512"
     }
   ]
 }
