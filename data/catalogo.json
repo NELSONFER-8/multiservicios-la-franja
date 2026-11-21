@@ -71,6 +71,33 @@
       "precio": 23,
       "unidad": "PIE",
       "imagen": "/img/uploads/multi-rojo.jpg"
+    },
+    {
+      "nombre": "LAMINA TROQUELADA MULTI TERRACOTA",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
+      "precio": 23,
+      "unidad": "PIE",
+      "imagen": "/img/uploads/multi-terracota.webp"
+    },
+    {
+      "nombre": "LAMINA TROQUELADA MULTI VERDE",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
+      "precio": 23,
+      "unidad": "PIE",
+      "imagen": "/img/uploads/multi-verde.jpg"
+    },
+    {
+      "nombre": "LAMINA TROQUELADA MULTI AZUL",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "precio": 25,
+      "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
+      "unidad": "PIE",
+      "imagen": "/img/uploads/multi-azul.jpg"
     }
   ]
 }
