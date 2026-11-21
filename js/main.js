@@ -9,6 +9,9 @@
     ["nosotros.html", "Nosotros"],
     ["contacto.html", "Contacto"]
   ];
+  var SUBPAGES = [
+    ["trabajos.html", "Trabajos realizados"]
+  ];
 
   /* Funciona con URLs limpias de Netlify (/productos) y con /productos.html */
   function pageKey() {
@@ -30,8 +33,9 @@
   function esc(t) { return L.esc(t); }
 
   function label() {
-    for (var i = 0; i < PAGES.length; i++) {
-      if (PAGES[i][0].replace(/\.html$/i, "") === current) return PAGES[i][1];
+    var all = PAGES.concat(SUBPAGES);
+    for (var i = 0; i < all.length; i++) {
+      if (all[i][0].replace(/\.html$/i, "") === current) return all[i][1];
     }
     return "Inicio";
   }
@@ -39,7 +43,7 @@
   function links() {
     return PAGES.map(function (p) {
       var key = p[0].replace(/\.html$/i, "");
-      var active = key === current;
+      var active = key === current || (current === "trabajos" && key === "servicios");
       var texto = get("paginas.comun.nav." + key, p[1]);
       return '<li><a href="' + p[0] + '"' + (active ? ' class="active" aria-current="page"' : "") + ">" + esc(texto) + "</a></li>";
     }).join("");
@@ -57,7 +61,7 @@
     var src = L.asset(get("logo", ""));
     return src
       ? '<img class="brand-logo-img" src="' + esc(src) + '" alt="' + esc(get("nombre", "")) + '">'
-      : '<div class="brand-logo">🛠️</div>';
+      : '<div class="brand-logo">LF</div>';
   }
 
   /* Mapa de colores editables -> variables CSS. */
@@ -140,11 +144,11 @@
           break;
         case "contacto.email":
           if (!val) { node.setAttribute("hidden", ""); node.innerHTML = ""; }
-          else { node.removeAttribute("hidden"); node.innerHTML = '<span class="ico">✉️</span><span><a href="mailto:' + esc(val) + '">' + esc(val) + "</a></span>"; }
+          else { node.removeAttribute("hidden"); node.innerHTML = '<span><a href="mailto:' + esc(val) + '">' + esc(val) + "</a></span>"; }
           break;
         case "contacto.horario":
           if (!val) { node.setAttribute("hidden", ""); node.innerHTML = ""; }
-          else { node.removeAttribute("hidden"); node.innerHTML = '<span class="ico">🕑</span><span>' + esc(val) + "</span>"; }
+          else { node.removeAttribute("hidden"); node.innerHTML = "<span>" + esc(val) + "</span>"; }
           break;
         default:
           if (node.tagName === "A" && node.hasAttribute("data-wa-text")) {
@@ -157,6 +161,13 @@
             node.textContent = get(key, (node.textContent || "").trim());
           }
       }
+    });
+
+    /* Imágenes configurables en tarjetas (sin iconos genéricos). */
+    var imageNodes = document.querySelectorAll("[data-lafanja-imagen]");
+    Array.prototype.forEach.call(imageNodes, function (node) {
+      var src = L.asset(get(node.getAttribute("data-lafanja-imagen"), ""));
+      node.innerHTML = src ? '<img src="' + esc(src) + '" alt="" loading="lazy">' : "";
     });
   }
 

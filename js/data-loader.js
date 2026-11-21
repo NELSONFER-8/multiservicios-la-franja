@@ -13,12 +13,8 @@
 
   var FALLBACK = {
     catalogo: {"categorias":[{"nombre":"FERRETERÍA GENERAL","subcategorias":[{"nombre":"Herramientas manuales","productos":[{"nombre":"Martillo de uña 16 oz","descripcion":"Mango antideslizante, ideal para carpintería y construcción.","precio":65,"unidad":"unidad","imagen":""},{"nombre":"Alicate universal 8\"","descripcion":"Acero forjado con mangos aislados.","precio":55,"unidad":"unidad","imagen":""}]},{"nombre":"Clavos y tornillos","productos":[{"nombre":"Clavo de acero 3\"","descripcion":"Clavo común para construcción.","precio":8,"unidad":"libra","imagen":""},{"nombre":"Tornillo para madera 2\"","descripcion":"Cabeza plana, paquete surtido.","precio":20,"unidad":"caja","imagen":""}]}]},{"nombre":"VIDRIERÍA","subcategorias":[{"nombre":"Vidrio plano","productos":[{"nombre":"Vidrio claro 3 mm","descripcion":"Corte a la medida para ventanas y puertas.","precio":90,"unidad":"m²","imagen":""},{"nombre":"Vidrio claro 6 mm","descripcion":"Mayor resistencia para mesas y divisiones.","precio":150,"unidad":"m²","imagen":""}]},{"nombre":"Espejos","productos":[{"nombre":"Espejo 4 mm","descripcion":"Espejo a la medida con bordes pulidos.","precio":180,"unidad":"m²","imagen":""}]}]},{"nombre":"HERRERÍA","subcategorias":[{"nombre":"Puertas y portones","productos":[{"nombre":"Portón metálico","descripcion":"Fabricado a la medida, con pintura anticorrosiva.","precio":1200,"unidad":"unidad","imagen":""}]},{"nombre":"Ventanas y balcones","productos":[{"nombre":"Balcón de hierro","descripcion":"Diseño según tu espacio.","precio":350,"unidad":"m²","imagen":""}]}]},{"nombre":"LÁMINAS Y PERFILES","subcategorias":[{"nombre":"Láminas","productos":[{"nombre":"Lámina galvanizada calibre 28","descripcion":"Para techos, 10 pies.","precio":95,"unidad":"unidad","imagen":""},{"nombre":"Lámina troquelada","descripcion":"Acabado resistente a la intemperie.","precio":110,"unidad":"unidad","imagen":""}]},{"nombre":"Perfiles","productos":[{"nombre":"Perfil tubular cuadrado 1\"","descripcion":"Tubo estructural de 6 metros.","precio":140,"unidad":"unidad","imagen":""},{"nombre":"Ángulo de hierro 1\"","descripcion":"Para estructuras y marcos.","precio":85,"unidad":"unidad","imagen":""}]}]},{"nombre":"MOLDURA","subcategorias":[{"nombre":"Molduras de madera","productos":[{"nombre":"Moldura de pared","descripcion":"Acabado liso, ideal para marcos y decoración.","precio":25,"unidad":"metro","imagen":""},{"nombre":"Moldura para cuadros","descripcion":"Varios estilos disponibles.","precio":18,"unidad":"metro","imagen":""}]}]}]},
-    servicios: {"servicios":[{"titulo":"Corte de vidrio a la medida","descripcion":"Vidrio claro, espejos y divisiones cortados al tamaño que necesitas.","icono":"🪟"},{"titulo":"Trabajos de herrería","descripcion":"Puertas, portones, balcones y estructuras metálicas fabricadas a la medida.","icono":"⚒️"},{"titulo":"Venta de láminas y perfiles","descripcion":"Láminas para techo, tubos y ángulos para tus proyectos.","icono":"🏗️"},{"titulo":"Molduras y marcos","descripcion":"Molduras para decoración, marcos y acabados.","icono":"🖼️"},{"titulo":"Ferretería en general","descripcion":"Herramientas, clavos, tornillos y materiales de construcción.","icono":"🔧"},{"titulo":"Cotizaciones por WhatsApp","descripcion":"Escríbenos y te cotizamos rápido, sin salir de tu comunidad.","icono":"💬"}]}
-  };
-
-  var ICONOS = {
-    "ferreteria-general": "🔧", "vidrieria": "🪟", "herreria": "⚒️",
-    "laminas-y-perfiles": "🏗️", "moldura": "🖼️"
+    servicios: {"servicios":[{"titulo":"Vidriería","slug":"vidrieria","descripcion":"Ventanas, mostradores, vitrinas y cielo raso.","imagen":"","verTrabajos":true},{"titulo":"Trabajos de herrería","slug":"herreria","descripcion":"Puertas, portones, balcones y estructuras metálicas a la medida.","imagen":"","verTrabajos":true},{"titulo":"Venta de láminas y perfiles","slug":"laminas","descripcion":"Láminas para techo, tubos y ángulos.","imagen":"","verTrabajos":false},{"titulo":"Molduras y marcos","slug":"moldura","descripcion":"Molduras, marcos y acabados.","imagen":"","verTrabajos":false},{"titulo":"Ferretería en general","slug":"ferreteria","descripcion":"Herramientas y materiales de construcción.","imagen":"","verTrabajos":false},{"titulo":"Cotizaciones por WhatsApp","slug":"cotizaciones","descripcion":"Cotizaciones rápidas por WhatsApp.","imagen":"","verTrabajos":false}]},
+    trabajos: {"trabajos":[]}
   };
 
   function slug(t) {
@@ -29,6 +25,11 @@
     return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
+  }
+  /* window.LAFRANJA.resolve(objeto, ruta): se usa con settings para textos editables. */
+  function txt(path, fallback) {
+    var v = window.LAFRANJA.resolve(window.LAFRANJA.settings, path);
+    return (v === "" || v == null) ? fallback : v;
   }
   function avisoError(url) {
     return '<div class="aviso-error"><strong>No se pudo cargar ' + esc(url) + '</strong><br>' +
@@ -122,7 +123,7 @@
             var tarjetas = prods.map(function (p) {
               var img = p.imagen
                 ? '<img src="' + esc(String(p.imagen).replace(/^\//, "")) + '" alt="' + esc(p.nombre) + '" loading="lazy">'
-                : (ICONOS[s] || "📦");
+                : "";
               var msg = "Hola, quisiera cotizar: " + p.nombre + " (" + c.nombre + ").";
               return '<article class="glass product"><div class="thumb">' + img + '</div><div class="body">' +
                 "<h4>" + esc(p.nombre) + "</h4>" +
@@ -135,7 +136,7 @@
           });
           if (bloqueSubs) html += '<div class="cat-block" id="' + s + '"><h2>' + esc(c.nombre) + "</h2>" + bloqueSubs + "</div>";
         });
-        contenedor.innerHTML = html || '<p class="empty">' + esc(window.LAFRANJA.resolve("paginas.productos.vacio", "No se encontraron productos.")) + "</p>";
+        contenedor.innerHTML = html || '<p class="empty">' + esc(txt("paginas.productos.vacio", "No se encontraron productos.")) + "</p>";
       }
 
       dibujarFiltros();
@@ -159,33 +160,82 @@
 
   /* ---------- Servicios ---------- */
   function iniciarServicios(contenedor) {
-    cargar("data/servicios.json", "servicios").then(function (data) {
+    Promise.all([cargar("data/servicios.json", "servicios"), window.LAFRANJA.ready]).then(function (res) {
+      var data = res[0];
       if (!data) { contenedor.innerHTML = avisoError("data/servicios.json"); return; }
       var lista = (data && data.servicios) || [];
+      var textoBoton = txt("paginas.servicios.verTrabajos", "Ver trabajos realizados");
       contenedor.innerHTML = lista.map(function (s) {
-        return '<article class="glass card"><div class="icon">' + esc(s.icono || "🔧") + "</div><h3>" +
-          esc(s.titulo) + "</h3><p>" + esc(s.descripcion) + "</p></article>";
-      }).join("") || '<p class="empty">' + esc(window.LAFRANJA.resolve("paginas.servicios.vacio", "Pronto publicaremos nuestros servicios.")) + "</p>";
+        var img = s.imagen
+          ? '<div class="card-image"><img src="' + esc(window.LAFRANJA.asset(s.imagen)) + '" alt="' + esc(s.titulo) + '" loading="lazy"></div>'
+          : "";
+        var srv = String(s.slug || slug(s.titulo));
+        var btn = s.verTrabajos
+          ? '<a class="btn btn-ghost btn-sm" href="trabajos.html?servicio=' + encodeURIComponent(srv) + '">' + esc(textoBoton) + "</a>"
+          : "";
+        return '<article class="glass card service-card">' + img + "<h3>" + esc(s.titulo) + "</h3><p>" +
+          esc(s.descripcion).replace(/\r?\n/g, "<br>") + "</p>" + btn + "</article>";
+      }).join("") || '<p class="empty">' + esc(txt("paginas.servicios.vacio", "Pronto publicaremos nuestros servicios.")) + "</p>";
     });
+  }
+
+  /* Lee la imagen configurada para cada categoría en data/categorias/*.json */
+  function imagenCategoria(s) {
+    return fetch(BASE + "data/categorias/" + s + ".json?v=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .catch(function () { return {}; });
   }
 
   /* ---------- Categorías en Inicio ---------- */
   function iniciarCategorias(contenedor) {
-    cargar("data/catalogo.json", "catalogo").then(function (data) {
+    Promise.all([cargar("data/catalogo.json", "catalogo"), window.LAFRANJA.ready]).then(function (res) {
+      var data = res[0];
       if (!data) { contenedor.innerHTML = avisoError("data/catalogo.json"); return; }
       var cats = normalizar(data).categorias || [];
-      contenedor.innerHTML = cats.map(function (c) {
-        var s = slug(c.nombre);
-        return '<a class="glass card cat-card" href="productos.html?cat=' + s + '"><div class="icon">' + (ICONOS[s] || "📦") +
-          "</div><h3>" + esc(c.nombre) + "</h3><p>" + esc(window.LAFRANJA.resolve("paginas.inicio.verCategoria", "Ver productos →")) + "</p></a>";
-      }).join("");
+      Promise.all(cats.map(function (c) { return imagenCategoria(slug(c.nombre)); })).then(function (detalles) {
+        contenedor.innerHTML = cats.map(function (c, i) {
+          var s = slug(c.nombre);
+          var img = detalles[i] && detalles[i].imagen
+            ? '<div class="card-image"><img src="' + esc(window.LAFRANJA.asset(detalles[i].imagen)) + '" alt="' + esc(c.nombre) + '" loading="lazy"></div>'
+            : "";
+          return '<a class="glass card cat-card" href="productos.html?cat=' + s + '">' + img +
+            "<h3>" + esc(c.nombre) + "</h3><p>" + esc(txt("paginas.inicio.verCategoria", "Ver productos →")) + "</p></a>";
+        }).join("");
+      });
+    });
+  }
+
+  /* ---------- Trabajos realizados ---------- */
+  function iniciarTrabajos(contenedor) {
+    Promise.all([cargar("data/trabajos.json", "trabajos"), window.LAFRANJA.ready]).then(function (res) {
+      var data = res[0];
+      if (!data) { contenedor.innerHTML = avisoError("data/trabajos.json"); return; }
+      var servicio = new URLSearchParams(location.search).get("servicio") || "";
+      var nombres = {
+        vidrieria: "Vidriería", herreria: "Herrería", laminas: "Láminas y perfiles",
+        moldura: "Moldura", ferreteria: "Ferretería general", cotizaciones: "Cotizaciones"
+      };
+      var tituloServicio = document.getElementById("trabajos-servicio");
+      if (tituloServicio && nombres[servicio]) tituloServicio.textContent = nombres[servicio];
+      var lista = ((data && data.trabajos) || []).filter(function (t) {
+        return !servicio || t.servicio === servicio;
+      });
+      contenedor.innerHTML = lista.map(function (t) {
+        var img = t.imagen
+          ? '<div class="work-photo"><img src="' + esc(window.LAFRANJA.asset(t.imagen)) + '" alt="' + esc(t.titulo) + '" loading="lazy"></div>'
+          : "";
+        return '<article class="glass card work-card">' + img + '<div class="work-body"><h3>' + esc(t.titulo) +
+          "</h3><p>" + esc(t.descripcion).replace(/\r?\n/g, "<br>") + "</p></div></article>";
+      }).join("") || '<p class="empty">' + esc(txt("paginas.trabajos.vacio", "Aún no hay trabajos publicados.")) + "</p>";
     });
   }
 
   var elP = document.getElementById("catalogo");
   var elS = document.getElementById("servicios-lista");
   var elC = document.getElementById("categorias-home");
+  var elT = document.getElementById("trabajos-lista");
   if (elP) iniciarProductos(elP);
   if (elS) iniciarServicios(elS);
   if (elC) iniciarCategorias(elC);
+  if (elT) iniciarTrabajos(elT);
 })();
