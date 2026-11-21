@@ -157,6 +157,18 @@
       "destacado": false,
       "imagen": "/img/uploads/metalum-f24ea4f4.webp",
       "sku": "LOM0.2512"
+    },
+    {
+      "nombre": "LAMINA ONDULADA ZINTRO ALUM 8FT",
+      "categoria": "LÁMINAS",
+      "subcategoria": "Láminas",
+      "descripcion": "lamina cal.28 0.25mm ancho util 75cm",
+      "precio": 64,
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
+      "imagen": "/img/uploads/images-1-10946760.jpg",
+      "sku": "LO8P0.25"
     }
   ]
 }
