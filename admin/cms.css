@@ -1,22 +1,62 @@
-/* Panel de administración - tema MULTISERVICIOS LA FRANJA */
-:root{
-  --primary-color:#0f766e !important;
-  --accent-color:#f59e0b !important;
-  --button-color:#0f1d38 !important;
-  --button-text-color:#ffffff !important;
-  --text-color:#1e293b !important;
-  --secondary-text-color:#64748b !important;
-  --background-color:#f4f7fb !important;
-  --sidebar-color:#0a1020 !important;
-  --sidebar-text-color:#e8eef9 !important;
-  --card-color:#ffffff !important;
-  --border-color:#e2e8f0 !important;
-  --error-color:#dc2626 !important;
+/* Panel de administración - tema MULTISERVICIOS LA FRANJA.
+   La paleta se declara una sola vez y se reutiliza en todo el panel. */
+html:root {
+  --lf-primary: #0f766e;
+  --lf-accent: #f59e0b;
+  --lf-ink: #1e293b;
+  --lf-muted: #64748b;
+  --lf-surface: #ffffff;
+  --lf-canvas: #f4f7fb;
+  --lf-line: #e2e8f0;
+  --lf-sidebar: #0a1020;
+  --lf-radius: 10px;
+
+  /* Variables de tema que consume Decap CMS */
+  --primary-color: var(--lf-primary);
+  --accent-color: var(--lf-accent);
+  --button-color: #0f1d38;
+  --button-text-color: #ffffff;
+  --text-color: var(--lf-ink);
+  --secondary-text-color: var(--lf-muted);
+  --background-color: var(--lf-canvas);
+  --sidebar-color: var(--lf-sidebar);
+  --sidebar-text-color: #e8eef9;
+  --card-color: var(--lf-surface);
+  --border-color: var(--lf-line);
+  --error-color: #dc2626;
 }
-html,body{
-  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif !important;
-  background:#f4f7fb !important;
+
+html body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  background: var(--lf-canvas);
 }
-button,[role="button"]{border-radius:10px !important}
-a{transition:color .15s ease,background-color .15s ease}
-input,textarea,select{font-family:inherit !important}
+
+html body button,
+html body [role="button"] { border-radius: var(--lf-radius); }
+
+html body input,
+html body textarea,
+html body select { font-family: inherit; }
+
+/* Listas y tarjetas del editor: más aire y mejor jerarquía visual. */
+html body [class*="SidebarNavList"] { gap: 4px; }
+html body [class*="SidebarNavLink"] { min-height: 38px; border-radius: 8px; line-height: 1.4; }
+html body [class*="ControlContainer"] { padding: 14px 16px; }
+html body [class*="ControlHint"] {
+  margin-top: 6px;
+  color: var(--lf-muted);
+  font-size: .86rem;
+  line-height: 1.5;
+}
+html body [class*="listControlItem"] {
+  margin-bottom: 12px;
+  border: 1px solid var(--lf-line);
+  border-radius: 12px;
+  background: var(--lf-surface);
+  overflow: hidden;
+}
+html body [class*="StyledListItemTopBar"] {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--lf-line);
+  font-weight: 600;
+}
