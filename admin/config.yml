@@ -197,6 +197,7 @@ collections:
     create: true
     delete: true
     identifier_field: "nombre"
+    summary: "{{fields.nombre}}"
     fields:
       - { label: "Nombre de la categoría", name: "nombre", widget: "string", hint: "Ej. FERRETERÍA GENERAL. Escribe siempre el mismo nombre para agrupar productos." }
       - { label: "Imagen de la categoría", name: "imagen", widget: "image", required: false, hint: "Se muestra en la tarjeta de la categoría en el Inicio. Si la dejas vacía, la tarjeta se muestra solo con texto." }
@@ -212,6 +213,7 @@ collections:
     create: true
     delete: true
     identifier_field: "nombre"
+    summary: "{{fields.nombre}} › {{fields.categoria}}"
     fields:
       - { label: "Nombre de la subcategoría", name: "nombre", widget: "string", hint: "Ej. Herramientas manuales o DESMALEZADORAS." }
       - label: "Categoría a la que pertenece"
@@ -236,10 +238,11 @@ collections:
           - label: "Productos"
             name: "productos"
             widget: "list"
-            summary: "{{fields.nombre}} — {{fields.categoria}}"
-            hint: "Recarga esta página antes de agregar o borrar productos. Categoría y subcategoría se eligen de una lista: créalas primero en los menús 1 y 2 si no aparecen."
+            summary: "{{fields.nombre}} | {{fields.categoria}} › {{fields.subcategoria}} — Q{{fields.precio}}{{fields.sku | ternary(' · ','')}}{{fields.sku}}"
+            hint: "Categoría y subcategoría se eligen de una lista: créalas primero en los menús 1 y 2 si no aparecen. Desactiva 'activo' para ocultar un producto sin borrarlo."
             fields:
               - { label: "Nombre del producto", name: "nombre", widget: "string" }
+              - { label: "SKU (opcional)", name: "sku", widget: "string", required: false, hint: "Código interno. Si lo escribes, aparece en el resumen y en la tarjeta del producto." }
               - label: "Categoría"
                 name: "categoria"
                 widget: "relation"
@@ -258,7 +261,18 @@ collections:
                 hint: "Elige de la lista. Para crear una nueva, ve al menú '2. Subcategorías'."
               - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
               - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
-              - { label: "Unidad (metro, unidad, m²...)", name: "unidad", widget: "string" }
+              - label: "Unidad de venta"
+                name: "unidad"
+                widget: "select"
+                options:
+                  - { label: "unidad", value: "unidad" }
+                  - { label: "bolsa", value: "bolsa" }
+                  - { label: "rollo", value: "rollo" }
+                  - { label: "mt2", value: "mt2" }
+                  - { label: "pie", value: "pie" }
+                default: "unidad"
+              - { label: "Activo (visible en la web)", name: "activo", widget: "boolean", required: false, default: true }
+              - { label: "Destacado", name: "destacado", widget: "boolean", required: false, default: false, hint: "Los productos destacados aparecen primero dentro de su subcategoría." }
               - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
 
   - name: "servicios"
