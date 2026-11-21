@@ -10,10 +10,151 @@ media_folder: "img/uploads"
 public_folder: "/img/uploads"
 
 collections:
+  - name: "catalogo"
+    label: "Productos"
+    label_singular: "producto"
+    description: "Precios, categorías, activos y destacados. Guarda para publicar los cambios en la web."
+    icon: "inventory_2"
+    files:
+      - name: "catalogo"
+        label: "Editar catálogo"
+        file: "data/catalogo.json"
+        format: "json"
+        fields:
+          - label: "Productos"
+            name: "productos"
+            widget: "list"
+            summary: "{{fields.nombre}} | {{fields.categoria}} › {{fields.subcategoria}} — Q{{fields.precio}}{{fields.sku | ternary(' · ','')}}{{fields.sku}}"
+            hint: "Categoría y subcategoría se eligen de una lista: créalas primero en Categorías y Subcategorías si no aparecen. Desactiva 'activo' para ocultar un producto sin borrarlo."
+            fields:
+              - { label: "Nombre del producto", name: "nombre", widget: "string" }
+              - { label: "SKU (opcional)", name: "sku", widget: "string", required: false, hint: "Código interno. Si lo escribes, aparece en el resumen y en la tarjeta del producto." }
+              - label: "Categoría"
+                name: "categoria"
+                widget: "relation"
+                collection: "categorias"
+                search_fields: ["nombre"]
+                value_field: "nombre"
+                display_fields: ["nombre"]
+                hint: "Elige de la lista. Para crear una nueva, ve a Categorías."
+              - label: "Subcategoría"
+                name: "subcategoria"
+                widget: "relation"
+                collection: "subcategorias"
+                search_fields: ["nombre", "categoria"]
+                value_field: "nombre"
+                display_fields: ["nombre", "categoria"]
+                hint: "Elige de la lista. Para crear una nueva, ve a Subcategorías."
+              - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
+              - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
+              - label: "Unidad de venta"
+                name: "unidad"
+                widget: "select"
+                options:
+                  - { label: "unidad", value: "unidad" }
+                  - { label: "bolsa", value: "bolsa" }
+                  - { label: "rollo", value: "rollo" }
+                  - { label: "mt2", value: "mt2" }
+                  - { label: "pie", value: "pie" }
+                default: "unidad"
+              - { label: "Activo (visible en la web)", name: "activo", widget: "boolean", required: false, default: true }
+              - { label: "Destacado", name: "destacado", widget: "boolean", required: false, default: false, hint: "Los productos destacados aparecen primero dentro de su subcategoría." }
+              - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
+
+  - name: "categorias"
+    label: "Categorías"
+    label_singular: "categoría"
+    description: "Crea primero las categorías: después aparecerán al editar productos."
+    icon: "category"
+    folder: "data/categorias"
+    extension: "json"
+    format: "json"
+    create: true
+    delete: true
+    identifier_field: "nombre"
+    summary: "{{fields.nombre}}"
+    fields:
+      - { label: "Nombre de la categoría", name: "nombre", widget: "string", hint: "Ej. FERRETERÍA GENERAL. Escribe siempre el mismo nombre para agrupar productos." }
+      - { label: "Imagen de la categoría", name: "imagen", widget: "image", required: false, hint: "Se muestra en la tarjeta de la categoría en el Inicio. Si la dejas vacía, la tarjeta se muestra solo con texto." }
+
+  - name: "subcategorias"
+    label: "Subcategorías"
+    label_singular: "subcategoría"
+    description: "Asigna cada subcategoría a una categoría antes de usarla en productos."
+    icon: "label"
+    folder: "data/subcategorias"
+    extension: "json"
+    format: "json"
+    create: true
+    delete: true
+    identifier_field: "nombre"
+    summary: "{{fields.nombre}} › {{fields.categoria}}"
+    fields:
+      - { label: "Nombre de la subcategoría", name: "nombre", widget: "string", hint: "Ej. Herramientas manuales o DESMALEZADORAS." }
+      - label: "Categoría a la que pertenece"
+        name: "categoria"
+        widget: "relation"
+        collection: "categorias"
+        search_fields: ["nombre"]
+        value_field: "nombre"
+        display_fields: ["nombre"]
+
+  - name: "servicios"
+    label: "Servicios"
+    label_singular: "servicio"
+    description: "Servicios visibles en la web y botones para abrir su galería de trabajos."
+    icon: "design_services"
+    files:
+      - name: "servicios"
+        label: "Editar servicios"
+        file: "data/servicios.json"
+        format: "json"
+        fields:
+          - label: "Servicios"
+            name: "servicios"
+            widget: "list"
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Identificador (slug)", name: "slug", widget: "string", hint: "Ej. vidrieria, herreria, laminas. Se usa para abrir los trabajos de ese servicio." }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
+              - { label: "Imagen de la tarjeta", name: "imagen", widget: "image", required: false, hint: "Sube una foto real del servicio. No uses iconos: las fotos dan más seriedad." }
+              - { label: "Mostrar botón 'Ver trabajos realizados'", name: "verTrabajos", widget: "boolean", default: false, hint: "Actívalo en Vidriería y Herrería para abrir su galería de fotos." }
+
+  - name: "trabajos"
+    label: "Trabajos realizados"
+    label_singular: "trabajo"
+    description: "Fotos de trabajos terminados. Se muestran en el servicio correspondiente."
+    icon: "photo_library"
+    files:
+      - name: "trabajos"
+        label: "Editar galería de trabajos"
+        file: "data/trabajos.json"
+        format: "json"
+        fields:
+          - label: "Trabajos"
+            name: "trabajos"
+            widget: "list"
+            summary: "{{fields.titulo}} — {{fields.servicio}}"
+            hint: "Agrega una entrada por cada trabajo. Sube la foto y escribe una descripción."
+            fields:
+              - { label: "Título del trabajo", name: "titulo", widget: "string", hint: "Ej. Ventana de aluminio en zona 5" }
+              - label: "Servicio"
+                name: "servicio"
+                widget: "select"
+                options:
+                  - { label: "Vidriería", value: "vidrieria" }
+                  - { label: "Herrería", value: "herreria" }
+                  - { label: "Láminas y perfiles", value: "laminas" }
+                  - { label: "Moldura", value: "moldura" }
+                  - { label: "Ferretería general", value: "ferreteria" }
+              - { label: "Descripción", name: "descripcion", widget: "text", hint: "Cuenta qué se hizo, el material usado y el resultado." }
+              - { label: "Foto del trabajo", name: "imagen", widget: "image", hint: "Se mostrará en la galería del servicio elegido." }
+
   - name: "negocio"
     label: "Datos del negocio"
     label_singular: "dato"
-    description: "Logo, colores, horario, mapa y textos principales del sitio."
+    description: "Logo, WhatsApp, dirección, horario y colores del sitio."
     icon: "store"
     files:
       - name: "site"
@@ -85,7 +226,7 @@ collections:
   - name: "paginas"
     label: "Textos de las páginas"
     label_singular: "texto"
-    description: "Edita los títulos y párrafos de Inicio, Productos, Servicios, Nosotros y Contacto."
+    description: "Títulos y párrafos de Inicio, Productos, Servicios, Nosotros y Contacto."
     icon: "article"
     files:
       - name: "paginas"
@@ -185,144 +326,3 @@ collections:
               - { label: "Título 'Ubicación' en el pie", name: "footerUbicacion", widget: "string" }
               - { label: "Título 'Teléfonos' en el pie", name: "footerTelefonos", widget: "string" }
               - { label: "Texto del enlace del mapa", name: "verMapa", widget: "string" }
-
-  - name: "categorias"
-    label: "1. Categorías"
-    label_singular: "categoría"
-    description: "Crea aquí las categorías. Después aparecerán en la lista del formulario de productos."
-    icon: "category"
-    folder: "data/categorias"
-    extension: "json"
-    format: "json"
-    create: true
-    delete: true
-    identifier_field: "nombre"
-    summary: "{{fields.nombre}}"
-    fields:
-      - { label: "Nombre de la categoría", name: "nombre", widget: "string", hint: "Ej. FERRETERÍA GENERAL. Escribe siempre el mismo nombre para agrupar productos." }
-      - { label: "Imagen de la categoría", name: "imagen", widget: "image", required: false, hint: "Se muestra en la tarjeta de la categoría en el Inicio. Si la dejas vacía, la tarjeta se muestra solo con texto." }
-
-  - name: "subcategorias"
-    label: "2. Subcategorías"
-    label_singular: "subcategoría"
-    description: "Crea aquí las subcategorías e indica a qué categoría pertenecen."
-    icon: "label"
-    folder: "data/subcategorias"
-    extension: "json"
-    format: "json"
-    create: true
-    delete: true
-    identifier_field: "nombre"
-    summary: "{{fields.nombre}} › {{fields.categoria}}"
-    fields:
-      - { label: "Nombre de la subcategoría", name: "nombre", widget: "string", hint: "Ej. Herramientas manuales o DESMALEZADORAS." }
-      - label: "Categoría a la que pertenece"
-        name: "categoria"
-        widget: "relation"
-        collection: "categorias"
-        search_fields: ["nombre"]
-        value_field: "nombre"
-        display_fields: ["nombre"]
-
-  - name: "catalogo"
-    label: "3. Productos"
-    label_singular: "producto"
-    description: "Agrega productos eligiendo categoría y subcategoría desde las listas."
-    icon: "inventory_2"
-    files:
-      - name: "catalogo"
-        label: "Editar catálogo"
-        file: "data/catalogo.json"
-        format: "json"
-        fields:
-          - label: "Productos"
-            name: "productos"
-            widget: "list"
-            summary: "{{fields.nombre}} | {{fields.categoria}} › {{fields.subcategoria}} — Q{{fields.precio}}{{fields.sku | ternary(' · ','')}}{{fields.sku}}"
-            hint: "Categoría y subcategoría se eligen de una lista: créalas primero en los menús 1 y 2 si no aparecen. Desactiva 'activo' para ocultar un producto sin borrarlo."
-            fields:
-              - { label: "Nombre del producto", name: "nombre", widget: "string" }
-              - { label: "SKU (opcional)", name: "sku", widget: "string", required: false, hint: "Código interno. Si lo escribes, aparece en el resumen y en la tarjeta del producto." }
-              - label: "Categoría"
-                name: "categoria"
-                widget: "relation"
-                collection: "categorias"
-                search_fields: ["nombre"]
-                value_field: "nombre"
-                display_fields: ["nombre"]
-                hint: "Elige de la lista. Para crear una nueva, ve al menú '1. Categorías'."
-              - label: "Subcategoría"
-                name: "subcategoria"
-                widget: "relation"
-                collection: "subcategorias"
-                search_fields: ["nombre", "categoria"]
-                value_field: "nombre"
-                display_fields: ["nombre", "categoria"]
-                hint: "Elige de la lista. Para crear una nueva, ve al menú '2. Subcategorías'."
-              - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
-              - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
-              - label: "Unidad de venta"
-                name: "unidad"
-                widget: "select"
-                options:
-                  - { label: "unidad", value: "unidad" }
-                  - { label: "bolsa", value: "bolsa" }
-                  - { label: "rollo", value: "rollo" }
-                  - { label: "mt2", value: "mt2" }
-                  - { label: "pie", value: "pie" }
-                default: "unidad"
-              - { label: "Activo (visible en la web)", name: "activo", widget: "boolean", required: false, default: true }
-              - { label: "Destacado", name: "destacado", widget: "boolean", required: false, default: false, hint: "Los productos destacados aparecen primero dentro de su subcategoría." }
-              - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
-
-  - name: "servicios"
-    label: "4. Servicios"
-    label_singular: "servicio"
-    description: "Los servicios que se muestran en la página Servicios."
-    icon: "design_services"
-    files:
-      - name: "servicios"
-        label: "Editar servicios"
-        file: "data/servicios.json"
-        format: "json"
-        fields:
-          - label: "Servicios"
-            name: "servicios"
-            widget: "list"
-            summary: "{{fields.titulo}}"
-            fields:
-              - { label: "Título", name: "titulo", widget: "string" }
-              - { label: "Identificador (slug)", name: "slug", widget: "string", hint: "Ej. vidrieria, herreria, laminas. Se usa para abrir los trabajos de ese servicio." }
-              - { label: "Descripción", name: "descripcion", widget: "text" }
-              - { label: "Imagen de la tarjeta", name: "imagen", widget: "image", required: false, hint: "Sube una foto real del servicio. No uses iconos: las fotos dan más seriedad." }
-              - { label: "Mostrar botón 'Ver trabajos realizados'", name: "verTrabajos", widget: "boolean", default: false, hint: "Actívalo en Vidriería y Herrería para abrir su galería de fotos." }
-
-  - name: "trabajos"
-    label: "5. Trabajos realizados"
-    label_singular: "trabajo"
-    description: "Sube fotos de trabajos terminados con su descripción. Se muestran al hacer clic en Vidriería o Herrería."
-    icon: "photo_library"
-    files:
-      - name: "trabajos"
-        label: "Editar galería de trabajos"
-        file: "data/trabajos.json"
-        format: "json"
-        fields:
-          - label: "Trabajos"
-            name: "trabajos"
-            widget: "list"
-            summary: "{{fields.titulo}} — {{fields.servicio}}"
-            hint: "Agrega una entrada por cada trabajo. Sube la foto y escribe una descripción."
-            fields:
-              - { label: "Título del trabajo", name: "titulo", widget: "string", hint: "Ej. Ventana de aluminio en zona 5" }
-              - label: "Servicio"
-                name: "servicio"
-                widget: "select"
-                options:
-                  - { label: "Vidriería", value: "vidrieria" }
-                  - { label: "Herrería", value: "herreria" }
-                  - { label: "Láminas y perfiles", value: "laminas" }
-                  - { label: "Moldura", value: "moldura" }
-                  - { label: "Ferretería general", value: "ferreteria" }
-              - { label: "Descripción", name: "descripcion", widget: "text", hint: "Cuenta qué se hizo, el material usado y el resultado." }
-              - { label: "Foto del trabajo", name: "imagen", widget: "image", hint: "Se mostrará en la galería del servicio elegido." }
