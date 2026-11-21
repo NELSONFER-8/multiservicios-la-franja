@@ -1,28 +1,60 @@
-// Devuelve el token a Decap CMS mediante postMessage.
-function renderBody(status, content) {
-  const html = `
-    <script>
-      const receiveMessage = (message) => {
-        window.opener.postMessage(
-          'authorization:github:${status}:${JSON.stringify(content)}',
-          message.origin
-        );
-        window.removeEventListener('message', receiveMessage, false);
-      };
-      window.addEventListener('message', receiveMessage, false);
-      window.opener.postMessage('authorizing:github', '*');
-    </script>
-  `;
-  return new Blob([html], { type: 'text/html' });
+// Canjea el código de GitHub y devuelve el token a Decap CMS mediante postMessage.
+import {
+  STATE_COOKIE,
+  leerCookie,
+  cookieEstado,
+  paginaPostMessage,
+} from '../lib/oauth.js';
+
+function responder(status, contenido, origin, limpiarCookie) {
+  return new Response(paginaPostMessage(status, contenido, origin), {
+    status: 200,
+    headers: {
+      'content-type': 'text/html;charset=UTF-8',
+      'cache-control': 'no-store',
+      ...(limpiarCookie ? { 'Set-Cookie': limpiarCookie } : {}),
+    },
+  });
 }
 
-export async function onRequest(context) {
-  const { request, env } = context;
+export async function onRequest({ request, env }) {
+  const origin = new URL(request.url).origin;
+  const limpiarCookie = cookieEstado('');
 
   try {
-    const url = new URL(request.url);
-    const code = url.searchParams.get('code');
-    const response = await fetch('https://github.com/login/oauth/access_token', {
+    const params = new URL(request.url).searchParams;
+    const estado = params.get('state') || '';
+    const esperado = leerCookie(request.headers.get('cookie'), STATE_COOKIE);
+
+    if (!estado || !esperado || estado !== esperado) {
+      return responder(
+        'error',
+        { message: 'Sesión de autorización inválida. Intenta iniciar sesión de nuevo.' },
+        origin,
+        limpiarCookie,
+      );
+    }
+
+    if (!env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET) {
+      return responder(
+        'error',
+        { message: 'Falta la configuración del servidor.' },
+        origin,
+        limpiarCookie,
+      );
+    }
+
+    const code = params.get('code');
+    if (!code) {
+      return responder(
+        'error',
+        { message: 'GitHub no devolvió el código de autorización.' },
+        origin,
+        limpiarCookie,
+      );
+    }
+
+    const respuesta = await fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -35,22 +67,23 @@ export async function onRequest(context) {
         code,
       }),
     });
-    const result = await response.json();
-    if (result.error) {
-      return new Response(renderBody('error', result), {
-        headers: { 'content-type': 'text/html;charset=UTF-8' },
-        status: 401,
-      });
+    const resultado = await respuesta.json();
+
+    if (resultado.error || !resultado.access_token) {
+      return responder('error', resultado, origin, limpiarCookie);
     }
-    return new Response(
-      renderBody('success', { token: result.access_token, provider: 'github' }),
-      { headers: { 'content-type': 'text/html;charset=UTF-8' }, status: 200 },
+
+    return responder(
+      'success',
+      { token: resultado.access_token, provider: 'github' },
+      origin,
+      limpiarCookie,
     );
   } catch (error) {
     console.error(error);
-    return new Response(error.message, {
-      headers: { 'content-type': 'text/html;charset=UTF-8' },
+    return new Response('No se pudo completar la autorización.', {
       status: 500,
+      headers: { 'cache-control': 'no-store' },
     });
   }
 }
