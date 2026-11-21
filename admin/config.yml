@@ -24,11 +24,10 @@ collections:
           - label: "Productos"
             name: "productos"
             widget: "list"
-            summary: "{{fields.nombre}} | {{fields.categoria}} › {{fields.subcategoria}} — Q{{fields.precio}}{{fields.sku | ternary(' · ','')}}{{fields.sku}}"
+            summary: "{{fields.nombre}} | {{fields.categoria}} › {{fields.subcategoria}} — Q{{fields.precio}}{{fields.sku | ternary(' · SKU ','')}}{{fields.sku}}{{fields.activo | ternary(' · ACTIVO',' · INACTIVO')}}{{fields.destacado | ternary(' · DESTACADO','')}}"
             hint: "Categoría y subcategoría se eligen de una lista: créalas primero en Categorías y Subcategorías si no aparecen. Desactiva 'activo' para ocultar un producto sin borrarlo."
             fields:
               - { label: "Nombre del producto", name: "nombre", widget: "string" }
-              - { label: "SKU (opcional)", name: "sku", widget: "string", required: false, hint: "Código interno. Si lo escribes, aparece en el resumen y en la tarjeta del producto." }
               - label: "Categoría"
                 name: "categoria"
                 widget: "relation"
@@ -45,7 +44,6 @@ collections:
                 value_field: "nombre"
                 display_fields: ["nombre", "categoria"]
                 hint: "Elige de la lista. Para crear una nueva, ve a Subcategorías."
-              - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
               - { label: "Precio (Q)", name: "precio", widget: "number", value_type: "float", min: 0 }
               - label: "Unidad de venta"
                 name: "unidad"
@@ -57,8 +55,10 @@ collections:
                   - { label: "mt2", value: "mt2" }
                   - { label: "pie", value: "pie" }
                 default: "unidad"
-              - { label: "Activo (visible en la web)", name: "activo", widget: "boolean", required: false, default: true }
-              - { label: "Destacado", name: "destacado", widget: "boolean", required: false, default: false, hint: "Los productos destacados aparecen primero dentro de su subcategoría." }
+              - { label: "SKU (opcional)", name: "sku", widget: "string", required: false, hint: "Código interno. Si lo escribes, aparece en el resumen y en la tarjeta del producto." }
+              - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
+              - { label: "Activo", name: "activo", widget: "boolean", required: false, default: true, hint: "Visible en la web." }
+              - { label: "Destacado", name: "destacado", widget: "boolean", required: false, default: false, hint: "Aparece primero dentro de su subcategoría." }
               - { label: "Imagen (opcional)", name: "imagen", widget: "image", required: false }
 
   - name: "categorias"
