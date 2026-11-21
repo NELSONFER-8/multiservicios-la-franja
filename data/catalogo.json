@@ -2,11 +2,13 @@
   "productos": [
     {
       "nombre": "DESMALEZADORA 33CC TRUPER 12497",
-      "precio": 1100,
       "categoria": "FERRETERÍA GENERAL",
       "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima1.2hp",
+      "precio": 1100,
       "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/12497_img01.webp"
     },
     {
@@ -15,7 +17,9 @@
       "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima 1.4hp",
       "precio": 1635,
-      "unidad": "UNIDAD",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/11029.jpg"
     },
     {
@@ -24,16 +28,20 @@
       "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima 1.7hp",
       "precio": 1700,
-      "unidad": "UNIDAD",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/11029.jpg"
     },
     {
+      "nombre": "DESMALEZADORA 63CC TRUPER 12671",
       "categoria": "FERRETERÍA GENERAL",
       "subcategoria": "DESMALEZADORAS",
-      "nombre": "DESMALEZADORA 63CC TRUPER 12671",
       "descripcion": "Motor a gasolina 2t, potencia maxima 3hp",
       "precio": 1940,
-      "unidad": "UNIDAD",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/des-63.jpg"
     },
     {
@@ -42,7 +50,9 @@
       "subcategoria": "DESMALEZADORAS",
       "descripcion": "motor a gasolina 2t, potencia maxima 2hp",
       "precio": 1775,
-      "unidad": "UNIDAD",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/11029.jpg"
     },
     {
@@ -51,7 +61,9 @@
       "subcategoria": "Láminas",
       "descripcion": "Lamina Calibre 26 0.38 ancho util de 100cm",
       "precio": 20,
-      "unidad": "PIE ",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/tr101.jpg"
     },
     {
@@ -60,7 +72,9 @@
       "subcategoria": "Láminas",
       "descripcion": "lamina de aluminio calibre 26 0.32 ancho util de 100cm",
       "precio": 17,
-      "unidad": "PIE",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/tr101.jpg"
     },
     {
@@ -69,7 +83,9 @@
       "subcategoria": "Láminas",
       "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
       "precio": 23,
-      "unidad": "PIE",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/multi-rojo.jpg"
     },
     {
@@ -78,7 +94,9 @@
       "subcategoria": "Láminas",
       "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
       "precio": 23,
-      "unidad": "PIE",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/multi-terracota.webp"
     },
     {
@@ -87,16 +105,20 @@
       "subcategoria": "Láminas",
       "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
       "precio": 23,
-      "unidad": "PIE",
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/multi-verde.jpg"
     },
     {
       "nombre": "LAMINA TROQUELADA MULTI AZUL",
       "categoria": "LÁMINAS",
       "subcategoria": "Láminas",
-      "precio": 21,
       "descripcion": "Lamina prepintada calibre 26 0.38 ancho util 100cm",
-      "unidad": "PIE",
+      "precio": 21,
+      "unidad": "unidad",
+      "activo": true,
+      "destacado": false,
       "imagen": "/img/uploads/multi-azul.jpg"
     }
   ]
