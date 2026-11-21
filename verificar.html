@@ -172,6 +172,36 @@
             return t.trabajos.length + " trabajos publicados, " + botones + " servicios con galería.";
           });
         });
+      }).then(function () {
+        return check("Unidades y campos de productos", function () {
+          var permitidas = ["unidad", "bolsa", "rollo", "mt2", "pie"];
+          return getText("data/catalogo.json").then(function (t) {
+            var d = JSON.parse(t);
+            var lista = d.productos || [];
+            if (!lista.length) throw new Error("El catálogo está vacío.");
+            lista.forEach(function (p, i) {
+              if (permitidas.indexOf(p.unidad) === -1) {
+                throw new Error("Producto " + (i + 1) + ": unidad no válida '" + p.unidad + "'.");
+              }
+              if (typeof p.activo !== "boolean" || typeof p.destacado !== "boolean") {
+                throw new Error("Producto " + (i + 1) + ": faltan los campos activo/destacado.");
+              }
+            });
+            return lista.length + " productos con unidades válidas y campos opcionales listos.";
+          });
+        });
+      }).then(function () {
+        return check("Formulario de productos en el CMS", function () {
+          return getText("admin/config.yml").then(function (t) {
+            ["name: \"sku\"", "name: \"activo\"", "name: \"destacado\"",
+             "value: \"bolsa\"", "value: \"rollo\"", "value: \"mt2\"", "value: \"pie\"",
+             "{{fields.categoria}} › {{fields.subcategoria}}"].forEach(function (texto) {
+              if (t.indexOf(texto) === -1) throw new Error("Falta en config.yml: " + texto);
+            });
+            if (t.indexOf("name: \"marca\"") !== -1) throw new Error("Sobra el campo marca.");
+            return "Resumen, unidades y campos opcionales configurados.";
+          });
+        });
       });
     })();
   </script>
