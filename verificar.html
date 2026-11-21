@@ -110,7 +110,7 @@
         return check("Panel de administración (admin/config.yml)", function () {
           return getText("admin/config.yml").then(function (t) {
             if (t.indexOf("Colores del sitio") === -1 || t.indexOf("Logotipo") === -1) throw new Error("Es la versión anterior del archivo.");
-            if (t.indexOf("5. Trabajos realizados") === -1 || t.indexOf('name: "imagen", widget: "image"') === -1) throw new Error("Faltan las imágenes o la galería de trabajos.");
+            if (t.indexOf('label: "Trabajos realizados"') === -1 || t.indexOf('name: "imagen", widget: "image"') === -1) throw new Error("Faltan las imágenes o la galería de trabajos.");
             return "Incluye logotipo, colores, categorías, imágenes y trabajos.";
           });
         });
