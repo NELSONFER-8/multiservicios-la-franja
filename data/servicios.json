@@ -1,7 +1,7 @@
 {
   "servicios": [
     {
-      "titulo": "Vidriería",
+      "titulo": "VIDRERIA",
       "slug": "vidrieria",
       "descripcion": "Fabricamos:\nVentanas pvc \nVentanas de aluminio\nMostradores\nVitrinas\nCielo Raso",
       "imagen": "/img/uploads/ventana_vidrio.jpg",
@@ -9,8 +9,8 @@
     },
     {
       "titulo": "HERRERIA",
-      "slug": "trabajamos ",
-      "descripcion": "Puertas\nPortones\nBalcones\nEstructuras metálicas fabricadas a la medida.\nBarandas ",
+      "slug": "trabajamos",
+      "descripcion": "Puertas\nPortones\nBalcones\nEstructuras metálicas fabricadas a la medida.\nBarandas",
       "imagen": "/img/uploads/puerta_ejemplo.jpeg",
       "verTrabajos": true
     },
