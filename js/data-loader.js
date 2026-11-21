@@ -11,8 +11,20 @@
   var BASE = SRC.replace(/^(.*\/)?js\/[^/]*$/, function (_, prefix) { return prefix || ""; });
   if (BASE === SRC) BASE = "";
 
+  /* Unidades permitidas por el CMS. m² se muestra con su símbolo, el resto tal cual. */
+  var ETIQUETAS_UNIDAD = { unidad: "unidad", bolsa: "bolsa", rollo: "rollo", mt2: "m²", pie: "pie" };
+  function etiquetaUnidad(valor) {
+    return ETIQUETAS_UNIDAD[valor] || String(valor || "");
+  }
+  function estaActivo(p) {
+    return p && p.activo !== false && String(p.activo).toLowerCase() !== "false";
+  }
+  function esDestacado(p) {
+    return Boolean(p && (p.destacado === true || String(p.destacado).toLowerCase() === "true"));
+  }
+
   var FALLBACK = {
-    catalogo: {"categorias":[{"nombre":"FERRETERÍA GENERAL","subcategorias":[{"nombre":"Herramientas manuales","productos":[{"nombre":"Martillo de uña 16 oz","descripcion":"Mango antideslizante, ideal para carpintería y construcción.","precio":65,"unidad":"unidad","imagen":""},{"nombre":"Alicate universal 8\"","descripcion":"Acero forjado con mangos aislados.","precio":55,"unidad":"unidad","imagen":""}]},{"nombre":"Clavos y tornillos","productos":[{"nombre":"Clavo de acero 3\"","descripcion":"Clavo común para construcción.","precio":8,"unidad":"libra","imagen":""},{"nombre":"Tornillo para madera 2\"","descripcion":"Cabeza plana, paquete surtido.","precio":20,"unidad":"caja","imagen":""}]}]},{"nombre":"VIDRIERÍA","subcategorias":[{"nombre":"Vidrio plano","productos":[{"nombre":"Vidrio claro 3 mm","descripcion":"Corte a la medida para ventanas y puertas.","precio":90,"unidad":"m²","imagen":""},{"nombre":"Vidrio claro 6 mm","descripcion":"Mayor resistencia para mesas y divisiones.","precio":150,"unidad":"m²","imagen":""}]},{"nombre":"Espejos","productos":[{"nombre":"Espejo 4 mm","descripcion":"Espejo a la medida con bordes pulidos.","precio":180,"unidad":"m²","imagen":""}]}]},{"nombre":"HERRERÍA","subcategorias":[{"nombre":"Puertas y portones","productos":[{"nombre":"Portón metálico","descripcion":"Fabricado a la medida, con pintura anticorrosiva.","precio":1200,"unidad":"unidad","imagen":""}]},{"nombre":"Ventanas y balcones","productos":[{"nombre":"Balcón de hierro","descripcion":"Diseño según tu espacio.","precio":350,"unidad":"m²","imagen":""}]}]},{"nombre":"LÁMINAS Y PERFILES","subcategorias":[{"nombre":"Láminas","productos":[{"nombre":"Lámina galvanizada calibre 28","descripcion":"Para techos, 10 pies.","precio":95,"unidad":"unidad","imagen":""},{"nombre":"Lámina troquelada","descripcion":"Acabado resistente a la intemperie.","precio":110,"unidad":"unidad","imagen":""}]},{"nombre":"Perfiles","productos":[{"nombre":"Perfil tubular cuadrado 1\"","descripcion":"Tubo estructural de 6 metros.","precio":140,"unidad":"unidad","imagen":""},{"nombre":"Ángulo de hierro 1\"","descripcion":"Para estructuras y marcos.","precio":85,"unidad":"unidad","imagen":""}]}]},{"nombre":"MOLDURA","subcategorias":[{"nombre":"Molduras de madera","productos":[{"nombre":"Moldura de pared","descripcion":"Acabado liso, ideal para marcos y decoración.","precio":25,"unidad":"metro","imagen":""},{"nombre":"Moldura para cuadros","descripcion":"Varios estilos disponibles.","precio":18,"unidad":"metro","imagen":""}]}]}]},
+    catalogo: {"categorias":[{"nombre":"FERRETERÍA GENERAL","subcategorias":[{"nombre":"Herramientas manuales","productos":[{"nombre":"Martillo de uña 16 oz","descripcion":"Mango antideslizante, ideal para carpintería y construcción.","precio":65,"unidad":"unidad","imagen":""},{"nombre":"Alicate universal 8\"","descripcion":"Acero forjado con mangos aislados.","precio":55,"unidad":"unidad","imagen":""}]},{"nombre":"Clavos y tornillos","productos":[{"nombre":"Clavo de acero 3\"","descripcion":"Clavo común para construcción.","precio":8,"unidad":"unidad","imagen":""},{"nombre":"Tornillo para madera 2\"","descripcion":"Cabeza plana, paquete surtido.","precio":20,"unidad":"bolsa","imagen":""}]}]},{"nombre":"VIDRIERÍA","subcategorias":[{"nombre":"Vidrio plano","productos":[{"nombre":"Vidrio claro 3 mm","descripcion":"Corte a la medida para ventanas y puertas.","precio":90,"unidad":"mt2","imagen":""},{"nombre":"Vidrio claro 6 mm","descripcion":"Mayor resistencia para mesas y divisiones.","precio":150,"unidad":"mt2","imagen":""}]},{"nombre":"Espejos","productos":[{"nombre":"Espejo 4 mm","descripcion":"Espejo a la medida con bordes pulidos.","precio":180,"unidad":"mt2","imagen":""}]}]},{"nombre":"HERRERÍA","subcategorias":[{"nombre":"Puertas y portones","productos":[{"nombre":"Portón metálico","descripcion":"Fabricado a la medida, con pintura anticorrosiva.","precio":1200,"unidad":"unidad","imagen":""}]},{"nombre":"Ventanas y balcones","productos":[{"nombre":"Balcón de hierro","descripcion":"Diseño según tu espacio.","precio":350,"unidad":"mt2","imagen":""}]}]},{"nombre":"LÁMINAS Y PERFILES","subcategorias":[{"nombre":"Láminas","productos":[{"nombre":"Lámina galvanizada calibre 28","descripcion":"Para techos, 10 pies.","precio":95,"unidad":"unidad","imagen":""},{"nombre":"Lámina troquelada","descripcion":"Acabado resistente a la intemperie.","precio":110,"unidad":"unidad","imagen":""}]},{"nombre":"Perfiles","productos":[{"nombre":"Perfil tubular cuadrado 1\"","descripcion":"Tubo estructural de 6 metros.","precio":140,"unidad":"unidad","imagen":""},{"nombre":"Ángulo de hierro 1\"","descripcion":"Para estructuras y marcos.","precio":85,"unidad":"unidad","imagen":""}]}]},{"nombre":"MOLDURA","subcategorias":[{"nombre":"Molduras de madera","productos":[{"nombre":"Moldura de pared","descripcion":"Acabado liso, ideal para marcos y decoración.","precio":25,"unidad":"unidad","imagen":""},{"nombre":"Moldura para cuadros","descripcion":"Varios estilos disponibles.","precio":18,"unidad":"unidad","imagen":""}]}]}]},
     servicios: {"servicios":[{"titulo":"Vidriería","slug":"vidrieria","descripcion":"Ventanas, mostradores, vitrinas y cielo raso.","imagen":"","verTrabajos":true},{"titulo":"Trabajos de herrería","slug":"herreria","descripcion":"Puertas, portones, balcones y estructuras metálicas a la medida.","imagen":"","verTrabajos":true},{"titulo":"Venta de láminas y perfiles","slug":"laminas","descripcion":"Láminas para techo, tubos y ángulos.","imagen":"","verTrabajos":false},{"titulo":"Molduras y marcos","slug":"moldura","descripcion":"Molduras, marcos y acabados.","imagen":"","verTrabajos":false},{"titulo":"Ferretería en general","slug":"ferreteria","descripcion":"Herramientas y materiales de construcción.","imagen":"","verTrabajos":false},{"titulo":"Cotizaciones por WhatsApp","slug":"cotizaciones","descripcion":"Cotizaciones rápidas por WhatsApp.","imagen":"","verTrabajos":false}]},
     trabajos: {"trabajos":[]}
   };
@@ -53,11 +65,33 @@
   }
   /* El CMS guarda una lista plana de productos; se agrupan por categoría/subcategoría.
      También acepta el formato anterior por categorías anidadas. */
+  /* Prepara una lista plana: oculta inactivos, conserva los campos del CMS y
+     coloca los destacados primero manteniendo el orden original de los demás. */
+  function prepararProductos(lista) {
+    return (lista || []).filter(estaActivo).map(function (p) {
+      return {
+        nombre: p.nombre, descripcion: p.descripcion, precio: p.precio,
+        categoria: p.categoria, subcategoria: p.subcategoria,
+        unidad: p.unidad, imagen: p.imagen, sku: p.sku,
+        activo: true, destacado: esDestacado(p)
+      };
+    }).sort(function (a, b) { return Number(b.destacado) - Number(a.destacado); });
+  }
+
   function normalizar(data) {
     if (!data) return { categorias: [] };
-    if (data.categorias) return data;
+    if (data.categorias) {
+      return { categorias: (data.categorias || []).map(function (c) {
+        return {
+          nombre: c.nombre,
+          subcategorias: (c.subcategorias || []).map(function (s) {
+            return { nombre: s.nombre, productos: prepararProductos(s.productos) };
+          })
+        };
+      }) };
+    }
     var cats = [];
-    (data.productos || []).forEach(function (p) {
+    prepararProductos(data.productos).forEach(function (p) {
       var nc = p.categoria || "Otros";
       var ns = p.subcategoria || "General";
       /* Une variantes del mismo nombre (mayúsculas, tildes, espacios) para no
@@ -67,10 +101,7 @@
       if (!c) { c = { nombre: nc, subcategorias: [] }; cats.push(c); }
       var s = c.subcategorias.filter(function (x) { return slug(x.nombre) === ks; })[0];
       if (!s) { s = { nombre: ns, productos: [] }; c.subcategorias.push(s); }
-      s.productos.push({
-        nombre: p.nombre, descripcion: p.descripcion, precio: p.precio,
-        unidad: p.unidad, imagen: p.imagen
-      });
+      s.productos.push(p);
     });
     return { categorias: cats };
   }
@@ -117,18 +148,21 @@
           var bloqueSubs = "";
           (c.subcategorias || []).forEach(function (sub) {
             var prods = (sub.productos || []).filter(function (p) {
-              return !texto || (p.nombre + " " + (p.descripcion || "") + " " + sub.nombre).toLowerCase().indexOf(texto) !== -1;
+              var buscable = [p.nombre, p.descripcion, sub.nombre, p.sku].join(" ").toLowerCase();
+              return !texto || buscable.indexOf(texto) !== -1;
             });
             if (!prods.length) return;
             var tarjetas = prods.map(function (p) {
               var img = p.imagen
                 ? '<img src="' + esc(String(p.imagen).replace(/^\//, "")) + '" alt="' + esc(p.nombre) + '" loading="lazy">'
                 : "";
+              var sku = p.sku ? '<p class="sku">SKU: ' + esc(p.sku) + "</p>" : "";
+              var destacado = p.destacado ? '<span class="badge-destacado">Destacado</span>' : "";
               var msg = "Hola, quisiera cotizar: " + p.nombre + " (" + c.nombre + ").";
               return '<article class="glass product"><div class="thumb">' + img + '</div><div class="body">' +
-                "<h4>" + esc(p.nombre) + "</h4>" +
+                "<h4>" + esc(p.nombre) + destacado + "</h4>" + sku +
                 '<p class="desc">' + esc(p.descripcion) + "</p>" +
-                '<div class="price">' + precio(p.precio) + (p.unidad ? " <small>/ " + esc(p.unidad) + "</small>" : "") + "</div>" +
+                '<div class="price">' + precio(p.precio) + (p.unidad ? " <small>/ " + esc(etiquetaUnidad(p.unidad)) + "</small>" : "") + "</div>" +
                 '<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="' + window.LAFRANJA.waLink(msg) + '">Consultar por WhatsApp</a>' +
                 "</div></article>";
             }).join("");
