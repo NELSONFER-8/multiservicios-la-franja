@@ -1,21 +1,31 @@
 // OAuth proxy para Decap CMS en Cloudflare Pages.
-// Redirige al login de GitHub y vuelve a /api/callback.
-export async function onRequest(context) {
-  const { request, env } = context;
+// Guarda un estado aleatorio en una cookie y redirige al login de GitHub.
+import { crearEstado, cookieEstado } from '../lib/oauth.js';
 
+export async function onRequest({ request, env }) {
   try {
+    if (!env.GITHUB_CLIENT_ID) {
+      return new Response('Falta la configuración del servidor.', { status: 500 });
+    }
+
     const url = new URL(request.url);
-    const redirectUrl = new URL('https://github.com/login/oauth/authorize');
-    redirectUrl.searchParams.set('client_id', env.GITHUB_CLIENT_ID);
-    redirectUrl.searchParams.set('redirect_uri', url.origin + '/api/callback');
-    redirectUrl.searchParams.set('scope', 'repo user');
-    redirectUrl.searchParams.set(
-      'state',
-      crypto.getRandomValues(new Uint8Array(12)).join(''),
-    );
-    return Response.redirect(redirectUrl.href, 302);
+    const state = crearEstado();
+    const destino = new URL('https://github.com/login/oauth/authorize');
+    destino.searchParams.set('client_id', env.GITHUB_CLIENT_ID);
+    destino.searchParams.set('redirect_uri', new URL('/api/callback', url.origin).href);
+    destino.searchParams.set('scope', 'repo user');
+    destino.searchParams.set('state', state);
+
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: destino.href,
+        'Set-Cookie': cookieEstado(state),
+        'Cache-Control': 'no-store',
+      },
+    });
   } catch (error) {
     console.error(error);
-    return new Response(error.message, { status: 500 });
+    return new Response('No se pudo iniciar sesión.', { status: 500 });
   }
 }
